@@ -4,11 +4,18 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { IonicModule } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 bootstrapApplication(AppComponent, {
-  providers: [
+providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideIonicAngular(),
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-  ],
+    provideIonicAngular(),
+    provideAnimations(),
+    importProvidersFrom(IonicModule.forRoot({}), IonicStorageModule.forRoot()),
+  ]
 });
