@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="tabs/estoque"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ isEdit() ? "Editar Produto" : "Novo Produto" }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+    <form (ngSubmit)="save()" [formGroup]="form">
+        <ion-list lines="full">
+            <ion-item>
+                <ion-input label="Nome" labelPlacement="stacked" formControlName="name" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input label="Código / SKU" labelPlacement="stacked" formControlName="sku"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input type="number" label="Quantidade" labelPlacement="stacked" formControlName="quantity" required></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input type="number" label="Preço unitário (opcional)" labelPlacement="stacked" formControlName="price"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-input label="Descrição" labelPlacement="stacked" formControlName="description"></ion-input>
+            </ion-item>
+        </ion-list>
+        <ion-button expand="block" type="submit" [disabled]="form.invalid">Salvar</ion-button>
+        <ion-button *ngIf="isEdit()" expand="block" color="danger" (click)="remove()">Excluir</ion-button>
+    </form>
+</ion-content>
