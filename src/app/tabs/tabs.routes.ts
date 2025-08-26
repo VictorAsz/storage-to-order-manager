@@ -10,10 +10,10 @@ export const routes: Routes = [
         path: 'estoque',
         loadChildren: () => import('../features/stock/stock.routes').then(r => r.STOCK_ROUTES)
       },
-      // {
-      //   path: 'pedidos',
-      //   loadChildren: () => import('../features/orders/orders.routes').then(m => m.ORDERS_ROUTES)
-      // },
+      {
+        path: 'pedidos',
+        loadChildren: () => import('../features/orders/orders.route').then(m => m.ORDERS_ROUTES)
+      },
     ],
   },
   {
