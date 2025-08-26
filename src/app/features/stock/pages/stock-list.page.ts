@@ -20,6 +20,10 @@ export class StockListPage {
   constructor(private service: ProductService, private router: Router) {
     this.load();
   }
+  
+  ionViewWillEnter(){
+    this.load();
+  }
 
   async load() {
     this.products.set(await this.service.getStock());
