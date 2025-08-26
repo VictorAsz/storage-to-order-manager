@@ -11,7 +11,7 @@ addIcons({ addOutline });
 
 @Component({
   standalone: true,
-  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButton, IonFab, IonFabButton, IonIcon, IonNote, IonBadge],
+  imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonBadge],
   templateUrl: './stock-list.page.html'
 })
 export class StockListPage {
@@ -26,10 +26,10 @@ export class StockListPage {
   }
 
   goNew() {
-    this.router.navigate(['estoque/novo']);
+    this.router.navigate(['/tabs/estoque/novo']);
   }
 
   open(p: Product) {
-    this.router.navigate(['estoque', p.id]);
+    this.router.navigate(['/tabs/estoque', p.id]);
   }
 }
