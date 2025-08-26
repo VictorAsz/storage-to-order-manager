@@ -1,4 +1,4 @@
-import { Component, signal, effect } from '@angular/core';
+import { Component, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonButton, IonFab, IonFabButton, IonIcon, IonNote, IonBadge } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
@@ -16,11 +16,9 @@ addIcons({ addOutline });
 })
 export class StockListPage {
   products = signal<Product[]>([]);
+  private service = inject(ProductService);
+  private router = inject(Router);
 
-  constructor(private service: ProductService, private router: Router) {
-    this.load();
-  }
-  
   ionViewWillEnter(){
     this.load();
   }
