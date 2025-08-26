@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Estoque</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let p of products()"
+              (click)="open(p)"
+              detail="true">
+      <ion-label>
+        <h2>{{ p.name }}</h2>
+        <p>SKU: {{ p.sku }}</p>
+      </ion-label>
+      <ion-badge slot="end">{{ p.quantity }}</ion-badge>
+      <ion-note slot="end" *ngIf="p.price">R$ {{ p.price | number:'1.2-2' }}</ion-note>
+    </ion-item>
+    <ion-item *ngIf="products().length === 0">
+      <ion-label>Nenhum produto cadastrado.</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="goNew()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
