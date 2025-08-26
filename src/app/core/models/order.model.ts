@@ -8,7 +8,7 @@ export interface OrderItem {
 export interface Order {
   id: string;
   customerName: string;
-  date: string;  
+  createdAt: string;  
   total: number;
   isConcluded?: boolean;
   deadlineDate?: string; 
