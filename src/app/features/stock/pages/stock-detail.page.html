@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/estoque"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Produto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="product() as p">
+  <ion-list>
+    <ion-item>
+      <ion-label><strong>Nome:</strong> {{ p.name }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label><strong>SKU:</strong> {{ p.sku }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label><strong>Quantidade:</strong> {{ p.quantity }}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="p.price !== undefined">
+      <ion-label><strong>Preço unit.:</strong> R$ {{ p.price | number:'1.2-2' }}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="p.description">
+      <ion-label><strong>Descrição:</strong> {{ p.description }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="block" (click)="edit()">Editar</ion-button>
+</ion-content>
