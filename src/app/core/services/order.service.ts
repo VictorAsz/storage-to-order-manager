@@ -8,7 +8,7 @@ import { StorageKeys } from '../types/storage-keys.enum';
 import { ProductService } from './product.service';
 
 @Injectable({ providedIn: 'root'})
-export class orderService { 
+export class OrderService { 
     private repo: IRepository<Order>
 
     constructor(storage: StorageService, private products: ProductService){
