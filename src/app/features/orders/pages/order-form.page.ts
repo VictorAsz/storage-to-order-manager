@@ -33,14 +33,14 @@ export class OrdersFormPage{
     })
 
     constructor() {
-      effect(() => {
-          const t = this.itemsFA.controls.reduce((acc, g) => {
-              const quantity = Number(g.get('quantity')!.value ?? 0);
-              const unitPrice = Number(g.get('unitPrice')!.value ?? 0);
-              return acc + quantity * unitPrice;
-          }, 0);
-          this.total.set(t);
-      });
+        this.form.get('items')!.valueChanges.subscribe(() => {
+            const totalValue = this.itemsFA.controls.reduce((acc, g) => {
+                const quantity = Number(g.get('quantity')!.value ?? 0);
+                const unitPrice = Number(g.get('unitPrice')!.value ?? 0);
+                return acc + quantity * unitPrice;
+            }, 0);
+            this.total.set(totalValue);
+        });
     }
 
     get itemsFA(){
