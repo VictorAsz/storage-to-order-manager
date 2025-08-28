@@ -1,0 +1,55 @@
+<ion-header class="ion-padding">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="tabs/pedidos"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Novo Pedido</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="save()" [formGroup]="form">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-input label="Cliente" labelPlacement="stacked" formControlName="customerName" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Data" labelPlacement="stacked" type="date"
+                   [value]="(form.get('deadlineDate')?.value | date:'yyyy-MM-dd')"
+                   (ionChange)="onDateChange($event)">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-list lines="full">
+      <ion-item *ngFor="let g of itemsFA.controls; let i = index">
+            <div class="w-full" [formGroup]="g">
+                <ion-item>
+                <ion-label position="stacked">Produto</ion-label>
+                <ion-select interface="popover" formControlName="productId" (ionChange)="onProductChange(i)">
+                    <ion-select-option *ngFor="let p of products()" [value]="p.id">{{ p.name }} ({{ p.quantity }} em estoque)</ion-select-option>
+                </ion-select>
+                </ion-item>
+
+                <ion-item>
+                <ion-input type="number" label="Quantidade" labelPlacement="stacked" formControlName="quantity"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                <ion-input type="number" label="Preço unitário" labelPlacement="stacked" formControlName="unitPrice"></ion-input>
+                </ion-item>
+
+                <ion-button color="medium" expand="block" (click)="removeItem(i)" *ngIf="itemsFA.length > 1">Remover item</ion-button>
+            </div>
+        </ion-item>
+
+      <ion-button expand="block" (click)="addItem()">Adicionar item</ion-button>
+    </ion-list>
+
+    <h2 style="text-align:center; margin: 12px 0;">Total: R$ {{ total() | number:'1.2-2' }}</h2>
+
+    <ion-button expand="block" type="submit" [disabled]="form.invalid || itemsFA.length === 0">Salvar Pedido</ion-button>
+  </form>
+</ion-content>
