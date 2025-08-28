@@ -32,6 +32,17 @@ export class OrdersFormPage{
         items: this.fb.array<FormGroup>([])
     })
 
+    constructor() {
+      effect(() => {
+          const t = this.itemsFA.controls.reduce((acc, g) => {
+              const quantity = Number(g.get('quantity')!.value ?? 0);
+              const unitPrice = Number(g.get('unitPrice')!.value ?? 0);
+              return acc + quantity * unitPrice;
+          }, 0);
+          this.total.set(t);
+      });
+    }
+
     get itemsFA(){
       return this.form.get('items') as FormArray<FormGroup>;
     }
@@ -39,16 +50,6 @@ export class OrdersFormPage{
     async ngOnInit(){
       this.products.set(await this.productService.getStock());
       this.addItem();
-    
-      effect(() => {
-        const t = this.itemsFA.controls.reduce((acc, g) =>
-        {
-        const quantity = Number(g.get('quantity')!.value ?? 0);
-        const unitPrice = Number(g.get('unitPrice')!.value ?? 0);
-        return acc + quantity * unitPrice;
-        }, 0);
-        this.total.set(t)
-      })
     }
 
     
