@@ -11,7 +11,7 @@ import { ProductService } from './product.service';
 export class OrderService { 
     private repo: IRepository<Order>
 
-    constructor(storage: StorageService, private products: ProductService){
+    constructor(private storage: StorageService, private productsService: ProductService){
         this.repo = new GenericStorageRepository<Order>(storage, StorageKeys.ORDERS)
     }
 
@@ -19,7 +19,7 @@ export class OrderService {
     getById(id: string) { return this.repo.getById(id)}
 
     async createOrder(order: Order): Promise<void>{
-        const stock = await this.products.getStock();
+        const stock = await this.productsService.getStock();
         const getProduct = (id: string) => stock.find(p => p.id === id);
     
         for(const item of order.items){
@@ -34,7 +34,7 @@ export class OrderService {
         for(const item of order.items){
             const product = getProduct(item.productId)!;
             const updatedProduct: Product = {...product, quantity: product.quantity - item.quantity};
-            await this.products.updateProduct(updatedProduct);
+            await this.productsService.updateProduct(updatedProduct);
         }
 
         await this.repo.add(order);
@@ -42,7 +42,20 @@ export class OrderService {
 
 
     async deleteOrder(id: string): Promise<void>{
-        //TODO: Implementar estorno ao excluir
+        let orders = await this.getOrders();
+        const order = orders.find(o => o.id === id);
+
+        if(order){
+            const products =  await this.productsService.getStock();
+            order.items.forEach(itemOrder => {
+                const pIndex = products.findIndex((p: Product) => p.id === itemOrder.productId)
+                if(pIndex > -1){
+                    products[pIndex].quantity += itemOrder.quantity;
+                    this.productsService.updateProduct(products[pIndex])
+                }
+            });
+        }
+        await this.repo.delete(id);
     }
 
     async finishOrder(id: string): Promise<void>{
