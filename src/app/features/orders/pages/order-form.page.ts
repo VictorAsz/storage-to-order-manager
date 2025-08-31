@@ -129,7 +129,7 @@ export class OrdersFormPage {
         this.router.navigate(['tabs/pedidos']);
     }
 
-    async remove() {
+    async deleteOrder() {
         if (this.id) {
             await this.orderService.deleteOrder(this.id);
             this.router.navigate(['tabs/pedidos']);

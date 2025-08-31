@@ -4,6 +4,13 @@
       <ion-back-button defaultHref="tabs/pedidos"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ isEdit() ? 'Editar Pedido' : 'Novo Pedido' }}</ion-title>
+      <ion-buttons *ngIf="isEdit()" slot="end">
+        <ion-button>
+            <span (click)="deleteOrder()" class="material-symbols-outlined">
+            delete
+            </span>
+        </ion-button>
+    </ion-buttons>       
   </ion-toolbar>
 </ion-header>
 
@@ -125,15 +132,15 @@
           {{ isEdit() ? 'Salvar Alterações' : 'Criar Pedido' }}
         </ion-button>
 
-        <ion-button 
+        <!-- <ion-button 
           *ngIf="isEdit()" 
           expand="block" 
           color="danger" 
           fill="outline"
-          (click)="remove()"
+          (click)="deleteOrder()"
           class="danger-btn">
           Excluir Pedido
-        </ion-button>
+        </ion-button> -->
       </div>
     </div>
   </form>
