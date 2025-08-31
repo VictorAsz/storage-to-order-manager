@@ -1,55 +1,140 @@
-<ion-header class="ion-padding">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="tabs/pedidos"></ion-back-button>
-        </ion-buttons>
-        <ion-title>Novo Pedido</ion-title>
-    </ion-toolbar>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/pedidos"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isEdit() ? 'Editar Pedido' : 'Novo Pedido' }}</ion-title>
+  </ion-toolbar>
 </ion-header>
 
-
-<ion-content class="ion-padding">
+<ion-content class="ion-padding-horizontal ion-padding-bottom">
   <form (ngSubmit)="save()" [formGroup]="form">
-    <ion-list lines="full">
-      <ion-item>
-        <ion-input label="Cliente" labelPlacement="stacked" formControlName="customerName" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-input label="Data" labelPlacement="stacked" type="date"
-                   [value]="(form.get('deadlineDate')?.value | date:'yyyy-MM-dd')"
-                   (ionChange)="onDateChange($event)">
+    <!-- Seção de informações básicas -->
+    <div class="section-container">
+      <h3 class="section-title">Informações do Pedido</h3>
+      
+      <ion-item class="custom-item">
+        <ion-input 
+          label="Cliente" 
+          labelPlacement="stacked" 
+          formControlName="customerName" 
+          required
+          class="custom-input">
         </ion-input>
       </ion-item>
-    </ion-list>
+      
+      <ion-item class="custom-item">
+        <ion-input 
+          label="Data de Entrega" 
+          labelPlacement="stacked" 
+          type="date"
+          [value]="(form.get('deadlineDate')?.value | date:'yyyy-MM-dd')"
+          (ionChange)="form.patchValue({ deadlineDate: $event.detail.value })"
+          class="custom-input">
+        </ion-input>
+      </ion-item>
+    </div>
 
-    <ion-list lines="full">
-      <ion-item *ngFor="let g of itemsFA.controls; let i = index">
-            <div class="w-full" [formGroup]="g">
-                <ion-item>
-                <ion-label position="stacked">Produto</ion-label>
-                <ion-select interface="popover" formControlName="productId" (ionChange)="onProductChange(i)">
-                    <ion-select-option *ngFor="let p of products()" [value]="p.id">{{ p.name }} ({{ p.quantity }} em estoque)</ion-select-option>
-                </ion-select>
-                </ion-item>
+    <!-- Seção de itens -->
+    <div class="section-container">
+      <div class="section-header">
+        <h3 class="section-title">Itens do Pedido</h3>
+        <ion-button 
+          size="small" 
+          fill="outline" 
+          (click)="addItem()"
+          class="add-item-btn">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Adicionar
+        </ion-button>
+      </div>
 
-                <ion-item>
-                <ion-input type="number" label="Quantidade" labelPlacement="stacked" formControlName="quantity"></ion-input>
-                </ion-item>
+      <div class="items-container">
+        <div 
+          *ngFor="let g of itemsFA.controls; let i = index" 
+          class="item-card"
+          [formGroup]="g">
+          
+          <div class="item-header">
+            <span class="item-number">Item {{ i + 1 }}</span>
+            <ion-button 
+              *ngIf="itemsFA.length > 1"
+              fill="clear" 
+              color="danger"
+              size="small"
+              (click)="removeItem(i)"
+              class="remove-btn">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
 
-                <ion-item>
-                <ion-input type="number" label="Preço unitário" labelPlacement="stacked" formControlName="unitPrice"></ion-input>
-                </ion-item>
+          <ion-item class="custom-item">
+            <ion-label position="stacked">Produto</ion-label>
+            <ion-select 
+              interface="action-sheet" 
+              formControlName="productId" 
+              (ionChange)="onProductChange(i)"
+              placeholder="Selecione um produto"
+              class="custom-select">
+              <ion-select-option *ngFor="let p of products()" [value]="p.id">
+                {{ p.name }} ({{ p.quantity }} em estoque)
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
 
-                <ion-button color="medium" expand="block" (click)="removeItem(i)" *ngIf="itemsFA.length > 1">Remover item</ion-button>
-            </div>
-        </ion-item>
+          <div class="input-row">
+            <ion-item class="custom-item flex-item">
+              <ion-input 
+                type="number" 
+                label="Quantidade" 
+                labelPlacement="stacked" 
+                formControlName="quantity"
+                min="1"
+                class="custom-input">
+              </ion-input>
+            </ion-item>
 
-      <ion-button expand="block" (click)="addItem()">Adicionar item</ion-button>
-    </ion-list>
+            <ion-item class="custom-item flex-item">
+              <ion-input 
+                type="number" 
+                label="Preço unitário" 
+                labelPlacement="stacked" 
+                formControlName="unitPrice"
+                min="0"
+                step="0.01"
+                class="custom-input">
+              </ion-input>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <h2 style="text-align:center; margin: 12px 0;">Total: R$ {{ total() | number:'1.2-2' }}</h2>
+    <!-- Seção de total e ações -->
+    <div class="section-container">
+      <div class="total-container">
+        <h2 class="total-text">Total: R$ {{ total() | number:'1.2-2' }}</h2>
+      </div>
 
-    <ion-button expand="block" type="submit" [disabled]="form.invalid || itemsFA.length === 0">Salvar Pedido</ion-button>
+      <div class="actions-container">
+        <ion-button 
+          expand="block" 
+          type="submit" 
+          [disabled]="form.invalid || itemsFA.length === 0"
+          class="primary-btn">
+          {{ isEdit() ? 'Salvar Alterações' : 'Criar Pedido' }}
+        </ion-button>
+
+        <ion-button 
+          *ngIf="isEdit()" 
+          expand="block" 
+          color="danger" 
+          fill="outline"
+          (click)="remove()"
+          class="danger-btn">
+          Excluir Pedido
+        </ion-button>
+      </div>
+    </div>
   </form>
 </ion-content>
