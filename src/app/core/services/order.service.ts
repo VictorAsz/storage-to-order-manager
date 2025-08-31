@@ -59,6 +59,24 @@ export class OrderService {
     }
 
     async updateOrder(order: Order): Promise<void> {
+        const stock = await this.productsService.getStock();
+        const getProduct = (id: string) => stock.find(p => p.id === id);
+    
+        for(const item of order.items){
+            const product = getProduct(item.productId)
+            if(!product) throw new Error('Produto não encontrado');
+            if(item.quantity <= 0) throw new Error('Quantidade inválida');
+            if(product.quantity < item.quantity) throw new Error(`Estoque insuficiente para ${product.name}`)
+        }
+        order.total = order.items.reduce((acc, it) => acc + it.quantity * it.unitPrice, 0)
+        order.createdAt = new Date().toISOString();
+
+        for(const item of order.items){
+            const product = getProduct(item.productId)!;
+            const updatedProduct: Product = {...product, quantity: product.quantity - item.quantity};
+            await this.productsService.updateProduct(updatedProduct);
+        }
+        
         await this.repo.update(order);
     }
 
