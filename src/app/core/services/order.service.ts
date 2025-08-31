@@ -58,6 +58,10 @@ export class OrderService {
         await this.repo.delete(id);
     }
 
+    async updateOrder(order: Order): Promise<void> {
+        await this.repo.update(order);
+    }
+
     async finishOrder(id: string): Promise<void>{
         //TODO: Adicionar feature para poder finalizar pedidos
     }
