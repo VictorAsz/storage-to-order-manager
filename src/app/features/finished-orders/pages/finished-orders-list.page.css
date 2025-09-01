@@ -1,0 +1,191 @@
+ion-content {
+  --background: var(--ion-background-color);
+  --color: var(--ion-text-color);
+}
+
+ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --color: var(--ion-toolbar-text-color);
+  --border-width: 0;
+}
+
+ion-title {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.orders-list {
+  background: transparent;
+  padding: 0;
+}
+
+ ion-item {
+   border-radius: var(--ion-border-radius);
+   margin: 6px;
+   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+ }
+
+.order-item {
+  --background: var(--ion-card-background);
+  --color: var(--ion-card-text-color);
+  --border-color: var(--ion-item-border-color);
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --inner-padding-top: 8px;
+  --inner-padding-bottom: 8px;
+  --detail-icon-color: var(--ion-color-primary);
+
+  margin-bottom: 12px;
+  border-radius: var(--ion-border-radius);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.order-item:hover {
+  transform: translateY(-2px);
+
+}
+
+.order-item:active {
+  transform: translateY(0);
+
+}
+
+.customer-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  margin: 0 0 6px 0;
+}
+
+.deadline-date {
+  font-size: 0.9rem;
+  color: var(--ion-text-color-muted);
+  margin: 0;
+}
+
+.order-total {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.empty-state {
+  --background: var(--ion-card-background);
+  --color: var(--ion-card-text-color);
+  margin-top: 40px;
+  border-radius: var(--ion-border-radius);
+  border: 2px dashed var(--ion-border-color);
+  background: transparent;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-content {
+  text-align: center;
+  padding: 24px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: var(--ion-text-color-muted);
+  margin-bottom: 16px;
+}
+
+.empty-content h3 {
+  color: var(--ion-text-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.empty-content p {
+  color: var(--ion-text-color-muted);
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.fab-button {
+  --background: var(--ion-color-primary);
+  --background-hover: var(--ion-button-background-hover);
+  --color: var(--ion-color-primary-contrast);
+  --box-shadow: 0 4px 16px rgba(0, 97, 168, 0.3);
+  
+  transition: all 0.3s ease;
+}
+
+.fab-button:hover {
+  transform: scale(1.1);
+  --box-shadow: 0 6px 24px rgba(0, 97, 168, 0.4);
+}
+
+.fab-button:active {
+  transform: scale(1.05);
+}
+
+@media (max-width: 576px) {
+  ion-content {
+    --padding-start: 12px;
+    --padding-end: 12px;
+  }
+  
+  .order-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .customer-name {
+    font-size: 1.05rem;
+  }
+  
+  .deadline-date {
+    font-size: 0.85rem;
+  }
+  
+  .order-total {
+    font-size: 1rem;
+  }
+  
+  .empty-content {
+    padding: 20px 16px;
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
+  }
+  
+  .empty-content h3 {
+    font-size: 1.1rem;
+  }
+  
+  .empty-content p {
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-item {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  ion-fab {
+    margin-bottom: env(safe-area-inset-bottom, 16px);
+    margin-right: env(safe-area-inset-right, 16px);
+  }
+}
