@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/finalizados"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes do Pedido</ion-title>
+      <ion-buttons slot="end">
+        <ion-button color="danger" >
+            <span (click)="deleteHandler()" class="material-symbols-outlined remove-btn " style="padding-right: 6px;">
+            delete
+            </span>
+        </ion-button>
+    </ion-buttons>     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="order() as o">
+  <div class="order-header-card">
+    <div class="order-info-grid">
+      <div class="info-item">
+      <span class="material-symbols-outlined info-icon">person</span>
+        <div class="info-content">
+          <span class="info-label">Cliente</span>
+          <h3 class="info-value">{{ o.customerName }}</h3>
+        </div>
+      </div>
+      
+      <div class="info-item">
+        <span class="material-symbols-outlined data-icon">calendar_today</span>
+        <div class="info-content">
+          <span class="info-label">Finalizado em</span>
+          <h3 class="info-value">{{ o.finishedDate | date:'dd/MM/yyyy' }}</h3>
+        </div>
+      </div>
+      
+      <div class="info-item total-item">
+       <span class="material-symbols-outlined total-icon">credit_card</span> 
+        <div class="info-content">
+          <span class="info-label">Total do Pedido</span>
+          <h2 class="total-value">R$ {{ o.total | number:'1.2-2' }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="items-section">
+    <div class="section-header">
+      <span class="material-symbols-outlined section-icon">list</span>
+      <h2 class="section-title">Itens do Pedido</h2>
+    </div>
+    
+    <div class="items-container">
+      <div class="item-card" *ngFor="let it of o.items; let i = index">
+        <div class="item-content">
+          <div class="item-info">
+            <h3 class="product-name">{{ productName(it.productId) }}</h3>
+            <div class="item-details">
+              <span class="quantity">{{ it.quantity }}x</span>
+              <span class="unit-price">R$ {{ it.unitPrice | number:'1.2-2' }}</span>
+            </div>
+          </div>
+          <div class="item-total">
+            <span class="total-price">R$ {{ (it.quantity * it.unitPrice) | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+      <ion-button (click)="reversalHandler()" class="ion-button finish-button">
+          <span class="material-symbols-outlined" style="margin-right: 5px;">undo</span>
+          Devolver pedido
+      </ion-button>
+  </ion-fab>
+</ion-content>
