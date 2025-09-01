@@ -127,12 +127,6 @@ ion-title {
   transform: scale(1.05);
 }
 
-/* Modo escuro - ajustes específicos */
-@media (prefers-color-scheme: dark) {
-
-}
-
-/* Responsividade */
 @media (max-width: 576px) {
   ion-content {
     --padding-start: 12px;
@@ -174,7 +168,6 @@ ion-title {
   }
 }
 
-/* Animação de entrada para os itens */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -190,7 +183,6 @@ ion-title {
   animation: fadeInUp 0.4s ease-out;
 }
 
-/* Safe area support */
 @supports (padding: env(safe-area-inset-bottom)) {
   ion-fab {
     margin-bottom: env(safe-area-inset-bottom, 16px);

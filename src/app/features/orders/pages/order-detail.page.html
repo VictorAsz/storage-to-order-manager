@@ -9,7 +9,6 @@
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="order() as o">
-  <!-- Card Principal com Informações do Pedido -->
   <div class="order-header-card">
     <div class="order-info-grid">
       <div class="info-item">
@@ -38,7 +37,6 @@
     </div>
   </div>
 
-  <!-- Card dos Itens -->
   <div class="items-section">
     <div class="section-header">
       <span class="material-symbols-outlined section-icon">list</span>
@@ -69,14 +67,4 @@
       <span class="material-symbols-outlined">edit</span>
     </ion-fab-button>
   </ion-fab>
-
-  <!-- Botão de Ação (descomentado se necessário) -->
-  <!-- 
-  <div class="actions-section">
-    <ion-button expand="block" color="danger" fill="outline" (click)="remove()" class="delete-button">
-      <ion-icon name="trash-outline" slot="start"></ion-icon>
-      Excluir Pedido
-    </ion-button>
-  </div>
-  -->
 </ion-content>

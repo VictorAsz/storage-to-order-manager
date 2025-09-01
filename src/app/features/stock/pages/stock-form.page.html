@@ -4,12 +4,7 @@
       <ion-back-button defaultHref="tabs/estoque"></ion-back-button>
     </ion-buttons>
     <ion-title>
-        <!-- <span class="material-symbols-outlined">
-            {{ isEdit() ? 'edit' : 'add_box' }}
-          </span>
-     -->
-            {{ isEdit() ? 'Editar Produto' : 'Adicionar Novo Produto' }}
-         
+            {{ isEdit() ? 'Editar Produto' : 'Adicionar Novo Produto' }}     
     </ion-title>
       <ion-buttons *ngIf="isEdit()" slot="end">
         <ion-button color="danger" >
@@ -28,7 +23,7 @@
         <div class="form-section">
           <ion-list lines="none">
             <!-- Nome do Produto -->
-                         <span class="error-message" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+            <span class="error-message" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
               Nome é obrigatório
             </span>
             <ion-item [class.has-error]="form.get('name')?.invalid && form.get('name')?.touched">

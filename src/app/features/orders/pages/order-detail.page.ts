@@ -10,7 +10,7 @@ import { createOutline } from 'ionicons/icons';
 @Component({
     standalone: true,
     imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonFab, IonFabButton],
-    templateUrl: "./order-detail-page.html",
+    templateUrl: "./order-detail.page.html",
     styleUrl: './order-detail.page.css'
 })
 

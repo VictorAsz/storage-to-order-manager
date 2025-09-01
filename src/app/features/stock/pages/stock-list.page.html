@@ -13,8 +13,7 @@
       detail="true"
       class="stock-item">
       <ion-label>
-        <h2 class="product-name">{{ p.name }}</h2>
-        <!-- <ion-badge class="quantity-badge">Disponível: {{ p.quantity }}</ion-badge> -->
+        <h2 class="product-name">{{ p.name }}</h2> 
            <span class="status-badge" 
                   [ngClass]="{
                     'low-stock': p.quantity > 0 && p.quantity <= 10,

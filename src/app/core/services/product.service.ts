@@ -25,6 +25,7 @@ export class ProductService {
   }
 
   async deleteProduct(id: string): Promise<void> {
+    // TODO: Alterar regra para que o produto seja apenas inativado e não excluído pois precisam ser mostrados nos pedidos finalizados.
     await this.repo.delete(id);
   }
 }

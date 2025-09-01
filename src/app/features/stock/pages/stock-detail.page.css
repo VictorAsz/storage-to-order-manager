@@ -14,7 +14,6 @@ ion-title {
   font-size: 1.3rem;
 }
 
-/* Card Principal do Produto */
 .product-details-card {
   background: var(--ion-card-background);
   border-radius: var(--ion-border-radius);
@@ -25,7 +24,6 @@ ion-title {
   animation: fadeInUp 0.4s ease-out;
 }
 
-/* Grade de informações do produto */
 .product-info-grid {
   display: grid;
   gap: 16px;
@@ -43,7 +41,6 @@ ion-title {
   border-bottom: none;
 }
 
-/* Ícones das informações */
 .info-icon {
   font-size: 1.8rem;
   color: var(--ion-color-primary);
@@ -62,7 +59,6 @@ ion-title {
   color: var(--ion-color-secondary);
 }
 
-/* Conteúdo das informações */
 .info-content {
   flex: 1;
 }
@@ -85,7 +81,6 @@ ion-title {
   line-height: 1.3;
 }
 
-/* Valor especial para preço */
 .price-value {
   margin: 0;
   font-size: 1.3rem;
@@ -93,7 +88,6 @@ ion-title {
   color: var(--ion-color-success);
 }
 
-/* Valor especial para quantidade */
 .quantity-value {
   margin: 0;
   font-size: 1.2rem;
@@ -101,7 +95,6 @@ ion-title {
   color: var(--ion-color-warning);
 }
 
-/* Seção de descrição expandida */
 .description-section {
   margin-top: 24px;
 }
@@ -144,7 +137,6 @@ ion-title {
   margin: 0;
 }
 
-/* Botão FAB */
 .fab-button {
   --background: var(--ion-color-primary);
   --background-hover: var(--ion-button-background-hover);
@@ -163,7 +155,6 @@ ion-title {
   transform: scale(1.05);
 }
 
-/* Badge de status */
 .status-badge {
   background: var(--ion-color-primary);
   color: var(--ion-color-primary-contrast);
@@ -188,7 +179,6 @@ ion-title {
   background: var(--ion-color-success);
 }
 
-/* Modo Escuro */
 @media (prefers-color-scheme: dark) {
   .product-details-card {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -199,7 +189,6 @@ ion-title {
   }
 }
 
-/* Responsividade */
 @media (max-width: 576px) {
   ion-content {
     --padding-start: 12px;
@@ -244,7 +233,6 @@ ion-title {
   }
 }
 
-/* Animações */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -256,14 +244,12 @@ ion-title {
   }
 }
 
-/* Suporte para safe area */
 @supports (padding: env(safe-area-inset-bottom)) {
   ion-content {
     --padding-bottom: calc(16px + env(safe-area-inset-bottom));
   }
 }
 
-/* Estados de loading */
 .product-details-card.loading {
   opacity: 0.6;
   pointer-events: none;

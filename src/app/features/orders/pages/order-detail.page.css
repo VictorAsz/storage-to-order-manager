@@ -14,9 +14,6 @@ ion-title {
   font-size: 1.3rem;
 }
 
-
-
-/* Card Principal */
 .order-header-card {
   background: var(--ion-card-background);
   border-radius: var(--ion-border-radius);
