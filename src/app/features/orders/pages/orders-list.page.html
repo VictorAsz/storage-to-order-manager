@@ -19,7 +19,7 @@
       class="order-item">
       <ion-label>
         <h2 class="customer-name">{{ o.customerName }}</h2>
-        <p class="deadline-date">{{ o.deadlineDate | date:'short' }}</p>
+        <p class="deadline-date">{{ o.deadlineDate | date:'dd/MM/yyyy' }}</p>
       </ion-label>
       <ion-note slot="end" class="order-total">R$ {{ o.total | number:'1.2-2' }}</ion-note>
     </ion-item>
