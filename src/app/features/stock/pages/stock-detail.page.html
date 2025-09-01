@@ -3,28 +3,80 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="tabs/estoque"></ion-back-button>
     </ion-buttons>
-    <ion-title>Produto</ion-title>
+    <ion-title>Detalhes do Produto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="product() as p">
-  <ion-list>
-    <ion-item>
-      <ion-label><strong>Nome:</strong> {{ p.name }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label><strong>SKU:</strong> {{ p.sku }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label><strong>Quantidade:</strong> {{ p.quantity }}</ion-label>
-    </ion-item>
-    <ion-item *ngIf="p.price !== undefined">
-      <ion-label><strong>Preço unit.:</strong> R$ {{ p.price | number:'1.2-2' }}</ion-label>
-    </ion-item>
-    <ion-item *ngIf="p.description">
-      <ion-label><strong>Descrição:</strong> {{ p.description }}</ion-label>
-    </ion-item>
-  </ion-list>
+  <!-- Card Principal com Informações do Produto -->
+  <div class="product-details-card">
+    <div class="product-info-grid">
+      <!-- Nome do Produto -->
+      <div class="info-item">
+        <span class="material-symbols-outlined info-icon">inventory_2</span>
+        <div class="info-content">
+          <span class="info-label">Nome do Produto</span>
+          <h3 class="info-value">{{ p.name }}</h3>
+        </div>
+      </div>
 
-  <ion-button expand="block" (click)="edit()">Editar</ion-button>
+      <!-- SKU -->
+      <div class="info-item" *ngIf="p.sku">
+        <span class="material-symbols-outlined info-icon">qr_code</span>
+        <div class="info-content">
+          <span class="info-label">Código SKU</span>
+          <h3 class="info-value">{{ p.sku }}</h3>
+        </div>
+      </div>
+
+      <!-- Quantidade -->
+      <div class="info-item">
+        <span class="material-symbols-outlined info-icon quantity-icon">warehouse</span>
+        <div class="info-content">
+          <span class="info-label">Quantidade em Estoque</span>
+          <h3 class="quantity-value">
+            {{ p.quantity }}
+            <!-- <span class="status-badge" 
+                  [ngClass]="{
+                    'low-stock': p.quantity > 0 && p.quantity <= 10,
+                    'out-of-stock': p.quantity === 0,
+                    'in-stock': p.quantity > 10
+                  }">
+              <span class="material-symbols-outlined" style="font-size: 14px;">
+                {{ p.quantity === 0 ? 'warning' : p.quantity <= 10 ? 'info' : 'check_circle' }}
+              </span>
+              {{ p.quantity === 0 ? 'Sem estoque' : p.quantity <= 10 ? 'Estoque baixo' : 'Em estoque' }}
+            </span> -->
+          </h3>
+        </div>
+      </div>
+
+      <!-- Preço (se disponível) -->
+      <div class="info-item" *ngIf="p.price !== undefined">
+        <span class="material-symbols-outlined info-icon price-icon">attach_money</span>
+        <div class="info-content">
+          <span class="info-label">Preço Unitário</span>
+          <h2 class="price-value">R$ {{ p.price | number:'1.2-2' }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção de Descrição (se disponível) -->
+  <div class="description-section" *ngIf="p.description">
+    <div class="description-card">
+      <div class="section-header">
+        <span class="material-symbols-outlined section-icon">description</span>
+        <h2 class="section-title">Descrição</h2>
+      </div>
+      <p class="description-text">{{ p.description }}</p>
+    </div>
+  </div>
+
+  <!-- Botão FAB para Editar -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="edit()" class="fab-button">
+      <span class="material-symbols-outlined">edit</span>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
