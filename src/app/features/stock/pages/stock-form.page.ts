@@ -18,6 +18,7 @@ export class StockFormPage{
     private route = inject(ActivatedRoute);
     private router = inject(Router);
     private service = inject(ProductService);
+private alertController = inject(AlertController)
 
     isEdit = signal(false);
     id?: string;
@@ -55,9 +56,35 @@ export class StockFormPage{
          else await this.service.addProduct(entity);
          this.router.navigate(['tabs/estoque']);
     }
-    async remove(){
+    async deleteProduct(){
         await this.service.deleteProduct(this.id!);
-        this.router.navigate(['tabs/estoque'])
+}
+
+    async deleteHandler() {
+        const alert = await this.alertController.create({
+        header: 'Confirmar exclusão',
+        message: 'Você tem certeza que deseja deletar este pedido?',
+        buttons: [
+        {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+            console.log('Cancelou a exclusão, ufa~');
+            }
+        },
+        {
+            text: 'Deletar',
+            handler: async () => {
+            if (this.id) {
+                await this.deleteProduct();
+        this.router.navigate(['tabs/pedidos']);
+            }
+            }
+        }
+        ]
+    });
+
+    await alert.present();
     }
     
 }
