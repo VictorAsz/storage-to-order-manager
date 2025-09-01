@@ -4,25 +4,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <ion-item *ngFor="let p of products()"
-              (click)="open(p)"
-              detail="true">
+<ion-content class="ion-padding">
+  <ion-list class="stock-list">
+    <ion-item
+      *ngFor="let p of products()"
+      (click)="open(p)"
+      lines="none"
+      detail="true"
+      class="stock-item">
       <ion-label>
-        <h2>{{ p.name }}</h2>
-        <p>SKU: {{ p.sku }}</p>
+        <h2 class="product-name">{{ p.name }}</h2>
+        <!-- <ion-badge class="quantity-badge">Disponível: {{ p.quantity }}</ion-badge> -->
+           <span class="status-badge" 
+                  [ngClass]="{
+                    'low-stock': p.quantity > 0 && p.quantity <= 10,
+                    'out-of-stock': p.quantity === 0,
+                    'in-stock': p.quantity > 10
+                  }">
+              Em estoque:
+              {{ p.quantity === 0 ? p.quantity : p.quantity <= 10 ? p.quantity : p.quantity }}
+            </span>
       </ion-label>
-      <ion-badge slot="end">{{ p.quantity }}</ion-badge>
-      <ion-note slot="end" *ngIf="p.price">R$ {{ p.price | number:'1.2-2' }}</ion-note>
+      <div slot="end" class="product-info">
+        
+        <ion-note class="product-price">R$ {{ p.price ? (p.price | number:'1.2-2') : "0.00" }}</ion-note>
+      </div>
     </ion-item>
-    <ion-item *ngIf="products().length === 0">
-      <ion-label>Nenhum produto cadastrado.</ion-label>
+    
+    <ion-item *ngIf="products().length === 0" lines="none" class="empty-state">
+      <ion-label>
+        <div class="empty-content">
+          <ion-icon name="cube-outline" class="empty-icon"></ion-icon>
+          <h3>Nenhum produto cadastrado</h3>
+          <p>Toque no botão + para adicionar seu primeiro produto</p>
+        </div>
+      </ion-label>
     </ion-item>
   </ion-list>
-
+  
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="goNew()">
+    <ion-fab-button (click)="goNew()" class="fab-button">
       <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>

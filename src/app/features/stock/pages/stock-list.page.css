@@ -1,0 +1,236 @@
+ion-content {
+  --background: var(--ion-background-color);
+  --color: var(--ion-text-color);
+}
+
+ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --color: var(--ion-toolbar-text-color);
+  --border-width: 0;
+}
+
+ion-title {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.stock-list {
+  background: transparent;
+  padding: 0;
+}
+
+ion-item {
+  border-radius: var(--ion-border-radius);
+  margin: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.stock-item {
+  --background: var(--ion-card-background);
+  --color: var(--ion-card-text-color);
+  --border-color: var(--ion-item-border-color);
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --inner-padding-top: 8px;
+  --inner-padding-bottom: 8px;
+  --detail-icon-color: var(--ion-color-primary);
+  margin-bottom: 12px;
+  border-radius: var(--ion-border-radius);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.stock-item:hover {
+  transform: translateY(-2px);
+}
+
+.stock-item:active {
+  transform: translateY(0);
+}
+
+.product-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ion-text-color);
+  margin: 0 0 6px 0;
+}
+
+.product-sku {
+  font-size: 0.9rem;
+  color: var(--ion-text-color-muted);
+  margin: 0;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.quantity-badge {
+  --background: var(--ion-color-secondary);
+  --color: var(--ion-color-primary-contrast);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.product-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+
+.empty-state {
+  --background: var(--ion-card-background);
+  --color: var(--ion-card-text-color);
+  margin-top: 40px;
+  border-radius: var(--ion-border-radius);
+  border: 2px dashed var(--ion-border-color);
+  background: transparent;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-content {
+  text-align: center;
+  padding: 24px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: var(--ion-text-color-muted);
+  margin-bottom: 16px;
+}
+
+.empty-content h3 {
+  color: var(--ion-text-color);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.empty-content p {
+  color: var(--ion-text-color-muted);
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.fab-button {
+  --background: var(--ion-color-primary);
+  --background-hover: var(--ion-button-background-hover);
+  --color: var(--ion-color-primary-contrast);
+  --box-shadow: 0 4px 16px rgba(0, 97, 168, 0.3);
+  transition: all 0.3s ease;
+}
+
+.fab-button:hover {
+  transform: scale(1.1);
+  --box-shadow: 0 6px 24px rgba(0, 97, 168, 0.4);
+}
+
+.fab-button:active {
+  transform: scale(1.05);
+}
+
+/* Badge de status */
+.status-badge {
+  background: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-badge.low-stock {
+  background: var(--ion-color-danger);
+}
+
+.status-badge.out-of-stock {
+  background: var(--ion-color-danger);
+}
+
+.status-badge.in-stock {
+  background: var(--ion-color-success);
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+  ion-content {
+    --padding-start: 12px;
+    --padding-end: 12px;
+  }
+  
+  .stock-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .product-name {
+    font-size: 1.05rem;
+  }
+  
+  .product-sku {
+    font-size: 0.85rem;
+  }
+  
+  .product-price {
+    font-size: 0.95rem;
+  }
+  
+  .quantity-badge {
+    font-size: 0.8rem;
+    padding: 3px 6px;
+  }
+  
+  .empty-content {
+    padding: 20px 16px;
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
+  }
+  
+  .empty-content h3 {
+    font-size: 1.1rem;
+  }
+  
+  .empty-content p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Animação de entrada para os itens */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stock-item {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* Safe area support */
+@supports (padding: env(safe-area-inset-bottom)) {
+  ion-fab {
+    margin-bottom: env(safe-area-inset-bottom, 16px);
+    margin-right: env(safe-area-inset-right, 16px);
+  }
+}

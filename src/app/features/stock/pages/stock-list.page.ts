@@ -12,7 +12,8 @@ addIcons({ addOutline });
 @Component({
   standalone: true,
   imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonBadge],
-  templateUrl: './stock-list.page.html'
+  templateUrl: './stock-list.page.html',
+  styleUrl: './stock-list.page.css'
 })
 export class StockListPage {
   products = signal<Product[]>([]);
