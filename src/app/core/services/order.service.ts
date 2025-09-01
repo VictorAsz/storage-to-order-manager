@@ -80,7 +80,17 @@ export class OrderService {
         await this.repo.update(order);
     }
 
+    async getFinishedOrders(): Promise<Order[]>{
+       const orders = await this.getOrders();
+       return orders.filter((o) => o.isConcluded)
+    }
+
+
     async finishOrder(id: string): Promise<void>{
-        //TODO: Adicionar feature para poder finalizar pedidos
+        const orders = await this.getOrders();
+        let order = orders.find((o) => o.id === id )!
+        order.isConcluded = true;
+        order.finishedDate = Date();
+        await this.repo.update(order);
     }
 }
