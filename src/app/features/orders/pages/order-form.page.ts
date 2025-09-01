@@ -8,6 +8,7 @@ import { OrderService } from '../../../core/services/order.service';
 import { Product } from '../../../core/models/product.model';
 import { Order, OrderItem } from '../../../core/models/order.model';
 import { IonIcon } from '@ionic/angular/standalone';
+import { AlertController } from '@ionic/angular';
 
 @Component({
     standalone: true,
@@ -23,6 +24,7 @@ export class OrdersFormPage {
     private router = inject(Router);
     private productService = inject(ProductService);
     private orderService = inject(OrderService);
+    private alertController = inject(AlertController)
 
     isEdit = signal(false);
     id?: string;
@@ -132,7 +134,35 @@ export class OrdersFormPage {
     async deleteOrder() {
         if (this.id) {
             await this.orderService.deleteOrder(this.id);
-            this.router.navigate(['tabs/pedidos']);
+
         }
     }
+
+    async confirmDelete() {
+        const alert = await this.alertController.create({
+        header: 'Confirmar exclusão',
+        message: 'Você tem certeza que deseja deletar este pedido?',
+        buttons: [
+        {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+            console.log('Cancelou a exclusão, ufa~');
+            }
+        },
+        {
+            text: 'Deletar',
+            handler: async () => {
+            if (this.id) {
+                await this.orderService.deleteOrder(this.id);
+                this.router.navigate(['tabs/pedidos']);
+        }
+    }
+        }
+        ]
+    });
+
+    await alert.present();
+    }
+
 }
