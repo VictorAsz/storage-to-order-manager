@@ -14,6 +14,10 @@ export const routes: Routes = [
         path: 'pedidos',
         loadChildren: () => import('../features/orders/orders.route').then(m => m.ORDERS_ROUTES)
       },
+      {
+        path: 'finalizados',
+        loadChildren: () => import('../features/finished-orders/finished-orders.routes').then(m => m.FINISHED_ORDERS)
+      },
     ],
   },
   {
