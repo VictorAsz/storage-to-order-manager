@@ -11,6 +11,7 @@ export interface Order {
   createdAt: string;  
   total: number;
   isConcluded?: boolean;
-  deadlineDate?: string; 
+  deadlineDate?: string;
+  finishedDate?: string; 
   items: OrderItem[];
 }
