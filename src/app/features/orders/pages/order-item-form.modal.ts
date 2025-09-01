@@ -1,0 +1,89 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { 
+  IonButton, 
+  IonButtons, 
+  IonContent, 
+  IonHeader, 
+  IonInput, 
+  IonItem, 
+  IonLabel, 
+  IonList, 
+  IonSelect, 
+  IonSelectOption, 
+  IonTitle, 
+  IonToolbar 
+} from '@ionic/angular/standalone';
+import { Product } from 'src/app/core/models/product.model';
+import { ProductService } from 'src/app/core/services/product.service';
+
+@Component({
+  selector: 'app-order-item-form-modal',
+  templateUrl: './order-item-form.modal.html',
+  styleUrl: './order-item-form.modal.css',
+  standalone: true,
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonButtons, 
+    IonButton, 
+    IonContent, 
+    IonItem, 
+    IonLabel, 
+    IonSelect, 
+    IonSelectOption, 
+    IonInput,
+    IonList
+  ]
+})
+export class OrderItemFormModal {
+  itemForm: FormGroup;
+  products: Product[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private modalCtrl: ModalController,
+    private productService: ProductService
+  ) {
+    this.itemForm = this.fb.group({
+      productId: ['', Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      unitPrice: [0, [Validators.required, Validators.min(0.01)]],
+    });
+  }
+
+  async ngOnInit() {
+    try {
+      this.products = await this.productService.getStock();
+    } catch (error) {
+      console.error('Erro ao carregar produtos:', error);
+    }
+  }
+
+  onProductChange() {
+    const productId = this.itemForm.get('productId')?.value;
+    const product = this.products.find(p => p.id === productId);
+    
+    if (product && product.price) {
+      this.itemForm.patchValue({ 
+        unitPrice: product.price 
+      });
+    }
+  }
+
+  closeModal() {
+    this.modalCtrl.dismiss();
+  }
+
+  addItem() {
+    if (this.itemForm.valid) {
+      const itemData = this.itemForm.getRawValue();
+      this.modalCtrl.dismiss(itemData, 'confirm');
+    }
+  }
+}

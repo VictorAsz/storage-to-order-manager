@@ -1,0 +1,95 @@
+<!-- order-item-form.modal.html -->
+<ion-header>
+  <div class="modal-title-container">
+    <h2 class="modal-title">Adicionar Item</h2>
+  </div>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="form-container">
+    <form [formGroup]="itemForm" (ngSubmit)="addItem()">
+      <div class="form-card">
+        <div class="form-section">
+          <ion-list lines="none">
+            <!-- Produto -->
+            <span class="error-message" *ngIf="itemForm.get('productId')?.invalid && itemForm.get('productId')?.touched">
+              Produto é obrigatório
+            </span>
+            <ion-item [class.has-error]="itemForm.get('productId')?.invalid && itemForm.get('productId')?.touched">
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">inventory_2</span>
+                <ion-select 
+                  formControlName="productId" 
+                  interface="action-sheet" 
+                  (ionChange)="onProductChange()"
+                  label="Produto"
+                  labelPlacement="stacked"
+                  placeholder="Selecione um produto">
+                  <ion-select-option *ngFor="let p of products" [value]="p.id">
+                    {{ p.name }} ({{ p.quantity }} em estoque)
+                  </ion-select-option>
+                </ion-select>
+              </div>
+            </ion-item>
+
+            <!-- Quantidade -->
+            <span class="error-message" *ngIf="itemForm.get('quantity')?.invalid && itemForm.get('quantity')?.touched">
+              Quantidade deve ser maior que 0
+            </span>
+            <ion-item [class.has-error]="itemForm.get('quantity')?.invalid && itemForm.get('quantity')?.touched">
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">warehouse</span>
+                <ion-input
+                  type="number"
+                  label="Quantidade"
+                  labelPlacement="stacked"
+                  formControlName="quantity"
+                  required
+                  min="1"
+                  placeholder="0">
+                </ion-input>
+              </div>
+            </ion-item>
+
+            <!-- Preço Unitário -->
+            <span class="error-message" *ngIf="itemForm.get('unitPrice')?.invalid && itemForm.get('unitPrice')?.touched">
+              Preço deve ser maior que 0
+            </span>
+            <ion-item [class.has-error]="itemForm.get('unitPrice')?.invalid && itemForm.get('unitPrice')?.touched">
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">attach_money</span>
+                <ion-input
+                  type="number"
+                  label="Preço Unitário (R$)"
+                  labelPlacement="stacked"
+                  formControlName="unitPrice"
+                  min="0.01"
+                  step="0.01"
+                  placeholder="0,00">
+                </ion-input>
+              </div>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+
+      <!-- Botões de ação -->
+      <div class="modal-actions">
+        <ion-button 
+          fill="clear" 
+          color="medium" 
+          (click)="closeModal()"
+          class="cancel-button">
+          Cancelar
+        </ion-button>
+        <ion-button
+          type="submit"
+          [disabled]="itemForm.invalid"
+          class="save-button">
+          <span class="material-symbols-outlined button-icon">add</span>
+          Adicionar Item
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
