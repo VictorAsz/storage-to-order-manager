@@ -1,49 +1,82 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Estoque</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
+
+  <ion-searchbar
+    placeholder="Buscar produto..."
+    (ionInput)="filterProducts($event)">
+  </ion-searchbar>
+
+<div class="filters">
+  <div class="filters-scroll">
+    <ion-segment value="all" (ionChange)="filterByStock($event)" scrollable>
+      <ion-segment-button value="all">Todos</ion-segment-button>
+      <ion-segment-button value="in-stock">Em estoque</ion-segment-button>
+      <ion-segment-button value="low-stock">Baixo estoque</ion-segment-button>
+      <ion-segment-button value="out-of-stock">Esgotados</ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- TODO: implementar lógica de ativos e inativos -->
+  <!-- <ion-button fill="outline" (click)="toggleActive()">
+    {{ showActiveOnly() ? 'Mostrar Todos' : 'Somente Ativos' }}
+  </ion-button> -->
+</div>
+
   <ion-list class="stock-list">
     <ion-item
-      *ngFor="let p of products()"
+      *ngFor="let p of paginatedProducts()"
       (click)="open(p)"
       lines="none"
       detail="true"
       class="stock-item">
       <ion-label>
-        <h2 class="product-name">{{ p.name }}</h2> 
-           <span class="status-badge" 
-                  [ngClass]="{
-                    'low-stock': p.quantity > 0 && p.quantity <= 10,
-                    'out-of-stock': p.quantity === 0,
-                    'in-stock': p.quantity > 10
-                  }">
-              Em estoque:
-              {{ p.quantity === 0 ? p.quantity : p.quantity <= 10 ? p.quantity : p.quantity }}
-            </span>
+        <h2 class="product-name">{{ p.name }}</h2>
+        <span
+          class="status-badge"
+          [ngClass]="{
+            'low-stock': p.quantity > 0 && p.quantity <= 10,
+            'out-of-stock': p.quantity === 0,
+            'in-stock': p.quantity > 10
+          }">
+          Em estoque: {{ p.quantity }}
+        </span>
       </ion-label>
       <div slot="end" class="product-info">
-        
-        <ion-note class="product-price">R$ {{ p.price ? (p.price | number:'1.2-2') : "0.00" }}</ion-note>
+        <ion-note class="product-price">
+          R$ {{ p.price ? (p.price | number:'1.2-2') : "0.00" }}
+        </ion-note>
       </div>
     </ion-item>
-    
-    <ion-item *ngIf="products().length === 0" lines="none" class="empty-state">
+
+    <ion-item *ngIf="paginatedProducts().length === 0" lines="none" class="empty-state">
       <ion-label>
         <div class="empty-content">
           <ion-icon name="cube-outline" class="empty-icon"></ion-icon>
-          <h3>Nenhum produto cadastrado</h3>
-          <p>Toque no botão + para adicionar seu primeiro produto</p>
+          <h3>Nenhum produto encontrado</h3>
+          <p>Verifique os filtros ou a busca</p>
         </div>
       </ion-label>
     </ion-item>
   </ion-list>
-  
+  @if (paginatedProducts().length > pageSize) {
+    <div class="pagination">
+      <ion-button (click)="prevPage()" [disabled]="currentPage() === 1">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
+      <ion-button (click)="nextPage()" [disabled]="currentPage() === totalPages()">
+        Próxima
+      </ion-button>
+    </div>
+  }
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="goNew()" class="fab-button">
       <ion-icon name="add-outline"></ion-icon>

@@ -163,6 +163,46 @@ ion-item {
   background: var(--ion-color-success);
 }
 
+ion-searchbar{
+  --border-radius: 12px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0;
+  gap: 12px;
+  flex-wrap: nowrap;
+}
+
+.filters-scroll {
+  overflow-x: auto;
+  flex: 1;
+}
+
+.filters-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+ion-segment {
+  min-width: max-content;
+}
+
+ion-segment-button {
+  white-space: nowrap;
+}
+
+
 @media (max-width: 576px) {
   ion-content {
     --padding-start: 12px;
@@ -173,6 +213,19 @@ ion-item {
     --padding-start: 16px;
     --padding-end: 16px;
     margin-bottom: 8px;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filters-scroll {
+    width: 100%;
+  }
+
+  ion-button {
+    width: 100%;
   }
   
   .product-name {
