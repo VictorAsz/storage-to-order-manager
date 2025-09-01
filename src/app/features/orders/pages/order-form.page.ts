@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonSelect, IonSelectOption, IonLabel } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonSelect, IonSelectOption, IonLabel, IonFab, IonFabButton } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { OrderService } from '../../../core/services/order.service';
@@ -13,7 +13,7 @@ import { AlertController } from '@ionic/angular';
 @Component({
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonSelect, IonSelectOption, IonLabel, IonIcon,
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonButton, IonSelect, IonSelectOption, IonLabel, IonFab, IonFabButton
     ],
     templateUrl: './order-form.page.html',
     styleUrl: './order-form.page.css'
@@ -156,8 +156,8 @@ export class OrdersFormPage {
             if (this.id) {
                 await this.orderService.deleteOrder(this.id);
                 this.router.navigate(['tabs/pedidos']);
-        }
-    }
+            }
+            }
         }
         ]
     });

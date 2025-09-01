@@ -6,7 +6,7 @@
     <ion-title>{{ isEdit() ? 'Editar Pedido' : 'Novo Pedido' }}</ion-title>
       <ion-buttons *ngIf="isEdit()" slot="end">
         <ion-button>
-            <span (click)="deleteOrder()" class="material-symbols-outlined">
+            <span (click)="confirmDelete()" class="material-symbols-outlined remove-btn " style="padding-right: 6px;">
             delete
             </span>
         </ion-button>
@@ -16,11 +16,10 @@
 
 <ion-content class="ion-padding-horizontal ion-padding-bottom">
   <form (ngSubmit)="save()" [formGroup]="form">
-    <!-- Seção de informações básicas -->
     <div class="section-container">
-      <h3 class="section-title">Informações do Pedido</h3>
+      <h3 class="section-title">Informações</h3>
       
-      <ion-item class="custom-item">
+      <ion-item class="custom-item" lines="none">
         <ion-input 
           label="Cliente" 
           labelPlacement="stacked" 
@@ -29,9 +28,9 @@
           class="custom-input">
         </ion-input>
       </ion-item>
-      
-      <ion-item class="custom-item">
-        <ion-input 
+          <!-- TODO: Alterar a exibição da data -->
+      <ion-item class="custom-item" lines="none">
+        <ion-input  
           label="Data de Entrega" 
           labelPlacement="stacked" 
           type="date"
@@ -45,17 +44,14 @@
     <!-- Seção de itens -->
     <div class="section-container">
       <div class="section-header">
-        <h3 class="section-title">Itens do Pedido</h3>
-        <ion-button 
-          size="small" 
-          fill="outline" 
-          (click)="addItem()"
-          class="add-item-btn">
-          <ion-icon name="add" slot="start"></ion-icon>
-          Adicionar
+        <h3 class="section-title">
+          Itens
+        </h3>
+         <ion-button class="icon-button" fill="clear">
+            <span (click)="addItem()" class="material-symbols-outlined add-item-btn">add</span>
         </ion-button>
+        
       </div>
-
       <div class="items-container">
         <div 
           *ngFor="let g of itemsFA.controls; let i = index" 
@@ -70,12 +66,12 @@
               color="danger"
               size="small"
               (click)="removeItem(i)"
-              class="remove-btn">
-              <ion-icon name="trash-outline"></ion-icon>
+              class="icon-button">
+                <span (click)="removeItem(i)" class="material-symbols-outlined remove-btn"> delete </span>
             </ion-button>
           </div>
 
-          <ion-item class="custom-item">
+          <ion-item class="custom-item" lines="none">
             <ion-label position="stacked">Produto</ion-label>
             <ion-select 
               interface="action-sheet" 
@@ -90,7 +86,7 @@
           </ion-item>
 
           <div class="input-row">
-            <ion-item class="custom-item flex-item">
+            <ion-item class="custom-item flex-item" lines="none">
               <ion-input 
                 type="number" 
                 label="Quantidade" 
@@ -101,7 +97,7 @@
               </ion-input>
             </ion-item>
 
-            <ion-item class="custom-item flex-item">
+            <ion-item class="custom-item flex-item" lines="none">
               <ion-input 
                 type="number" 
                 label="Preço unitário" 
@@ -119,18 +115,18 @@
 
     <!-- Seção de total e ações -->
     <div class="section-container">
-      <div class="total-container">
+      <!-- <div class="total-container">
         <h2 class="total-text">Total: R$ {{ total() | number:'1.2-2' }}</h2>
-      </div>
+      </div> -->
 
       <div class="actions-container">
-        <ion-button 
+        <!-- <ion-button 
           expand="block" 
           type="submit" 
           [disabled]="form.invalid || itemsFA.length === 0"
           class="primary-btn">
-          {{ isEdit() ? 'Salvar Alterações' : 'Criar Pedido' }}
-        </ion-button>
+          {{ isEdit() ? 'Salvar' : 'Criar Pedido' }}
+        </ion-button> -->
 
         <!-- <ion-button 
           *ngIf="isEdit()" 
@@ -143,5 +139,24 @@
         </ion-button> -->
       </div>
     </div>
+
+
   </form>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+       <div class="total-container">
+        <h2 class="total-text">R$ {{ total() | number:'1.2-2' }}</h2>
+      </div>
+    </ion-fab>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button
+        type="submit" 
+        [disabled]="form.invalid || itemsFA.length === 0"
+        (click)="save()" 
+        class="fab-button"
+        >
+        <span class="material-symbols-outlined">save</span>
+      </ion-fab-button>
+    </ion-fab>
 </ion-content>
+
+
