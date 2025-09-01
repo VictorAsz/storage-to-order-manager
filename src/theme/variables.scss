@@ -1,25 +1,64 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
-
-
 :root {
   --ion-color-primary: #0061a8;
-  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast: #ffffff; 
   --ion-color-primary-rgb: 103, 80, 164;
 
-  --ion-color-secondary: #625b71;
-  --ion-color-tertiary: #7d5260;
+  --ion-color-secondary: #00a1a1;
+  --ion-color-tertiary: #d4513f;
 
   --ion-color-success: #386641;
   --ion-color-warning: #e9c46a;
-  --ion-color-danger: #e63946;
+  --ion-color-danger: #e63946; 
 
-  --ion-border-radius: 16px;
-  --ion-padding: 12px;
+  --ion-border-radius: 16px; 
+  --ion-padding: 12px; 
+ 
+  --ion-background-color: #ffffff; 
+  --ion-text-color: #333333; 
+  --ion-text-color-muted: #757575; 
+  
+  --ion-card-background: #ffffff; 
+  --ion-card-text-color: #333333; 
+  
+  --ion-button-background: #0061a8;
+  --ion-button-background-hover: #004f87;
+  --ion-button-text-color: #ffffff; 
+  
+  --ion-border-color: #dcdcdc; 
+  --ion-item-background: #f9f9f9; 
+  --ion-item-border-color: #e0e0e0;
+  
+  --ion-toolbar-background: #f8f9fa; 
+  --ion-toolbar-text-color: #333333; 
+  
+  --ion-toggle-background: #f0f0f0;
+  --ion-toggle-checked-background: #0061a8; 
 }
 
-ion-item {
-  border-radius: var(--ion-border-radius);
-  margin: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #121212;
+    --ion-text-color: #e0e0e0;
+    --ion-text-color-muted: #b0b0b0;
+    
+    --ion-card-background: #1e1e1e;
+    --ion-card-text-color: #e0e0e0;
+    
+    --ion-button-background: #0061a8; 
+    --ion-button-background-hover: #004f87; 
+    --ion-button-text-color: #ffffff; 
+    
+    --ion-border-color: #333333; 
+    --ion-item-background: #232323 !important; 
+    --ion-item-border-color: #333333 !important; 
+    
+    --ion-toolbar-background: #1f1f1f; 
+    --ion-toolbar-text-color: #e0e0e0; 
+    
+    --ion-toggle-background: #4e4e4e; 
+    --ion-toggle-checked-background: #0061a8; 
+  }
 }
+
