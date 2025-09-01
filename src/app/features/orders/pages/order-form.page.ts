@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonSelect, IonSelectOption, IonLabel, IonFab, IonFabButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonSelect, IonSelectOption, IonLabel, IonFab, IonFabButton, ModalController } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { OrderService } from '../../../core/services/order.service';
@@ -9,11 +9,14 @@ import { Product } from '../../../core/models/product.model';
 import { Order, OrderItem } from '../../../core/models/order.model';
 import { IonIcon } from '@ionic/angular/standalone';
 import { AlertController } from '@ionic/angular';
+import { OrderItemFormModal } from './order-item-form.modal';
+
+
 
 @Component({
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonButton, IonSelect, IonSelectOption, IonLabel, IonFab, IonFabButton
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonButton, IonSelect, IonSelectOption, IonLabel, IonFab, IonFabButton, OrderItemFormModal
     ],
     templateUrl: './order-form.page.html',
     styleUrl: './order-form.page.css'
@@ -24,7 +27,8 @@ export class OrdersFormPage {
     private router = inject(Router);
     private productService = inject(ProductService);
     private orderService = inject(OrderService);
-    private alertController = inject(AlertController)
+    private alertController = inject(AlertController);
+    private modalController = inject(ModalController)
 
     isEdit = signal(false);
     id?: string;
@@ -70,19 +74,20 @@ export class OrdersFormPage {
                 });
                 this.updateTotal();
             }
-        } else {
-            this.addItem(); // novo pedido começa com um item
-        }
+        } 
+        // else {
+        //     this.addItem(); // novo pedido começa com um item
+        // }
     }
 
-    addItem() {
-        const g = this.fb.group({
-            productId: ['', Validators.required],
-            quantity: [1, [Validators.required, Validators.min(1)]],
-            unitPrice: [0, [Validators.required, Validators.min(0)]],
-        });
-        this.itemsFA.push(g);
-    }
+    // addItem() {
+    //     const g = this.fb.group({
+    //         productId: ['', Validators.required],
+    //         quantity: [1, [Validators.required, Validators.min(1)]],
+    //         unitPrice: [0, [Validators.required, Validators.min(0)]],
+    //     });
+    //     this.itemsFA.push(g);
+    // }
 
     removeItem(i: number) {
         this.itemsFA.removeAt(i);
@@ -95,6 +100,48 @@ export class OrdersFormPage {
         if (p) {
             this.itemsFA.at(i).patchValue({ unitPrice: p.price ?? 0 });
         }
+    }
+
+    async openAddItemModal() {
+    const modal = await this.modalController.create({
+        component: OrderItemFormModal,
+        cssClass: 'sheet-modal', 
+        animated: true,
+        backdropDismiss: true,
+        initialBreakpoint: 0.8,
+        breakpoints: [0, 0.4, 0.6, 0.8, 1], 
+        handleBehavior: 'cycle' 
+    });
+
+    modal.onDidDismiss().then((data) => {
+        if (data.data && data.role === 'confirm') {
+        this.addItem(data.data);
+        }
+    });
+    
+    return await modal.present();
+    }
+
+    addItem(item: any) {
+        const itemGroup = this.fb.group({
+        productId: [item.productId, Validators.required],
+        quantity: [item.quantity, [Validators.required, Validators.min(1)]],
+        unitPrice: [item.unitPrice, [Validators.required, Validators.min(0)]],
+        });
+
+        this.itemsFA.push(itemGroup);
+        this.updateTotal();
+    }
+
+    getProductName(productId: string): string {
+        if (!productId) return 'Produto não selecionado';
+        
+        const product = this.products().find(p => p.id === productId);
+        return product ? product.name : 'Produto não encontrado';
+    }
+
+    getItemSubtotal(quantity: number, unitPrice: number): number {
+        return (quantity || 0) * (unitPrice || 0);
     }
 
     updateTotal() {

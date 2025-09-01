@@ -1,133 +1,135 @@
+<!-- order-form.page.html -->
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="tabs/pedidos"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ isEdit() ? 'Editar Pedido' : 'Novo Pedido' }}</ion-title>
-      <ion-buttons *ngIf="isEdit()" slot="end">
-        <ion-button>
-            <span (click)="confirmDelete()" class="material-symbols-outlined remove-btn " style="padding-right: 6px;">
-            delete
-            </span>
-        </ion-button>
-    </ion-buttons>       
+    <ion-buttons *ngIf="isEdit()" slot="end">
+      <ion-button color="danger">
+        <span (click)="confirmDelete()" class="material-symbols-outlined remove-btn">
+          delete
+        </span>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding-horizontal ion-padding-bottom">
-  <form (ngSubmit)="save()" [formGroup]="form">
-    <div class="section-container">
-      <h3 class="section-title">Informações</h3>
+  <div class="form-container">
+    <form (ngSubmit)="save()" [formGroup]="form">
       
-      <ion-item class="custom-item" lines="none">
-        <ion-input 
-          label="Cliente" 
-          labelPlacement="stacked" 
-          formControlName="customerName" 
-          required
-          class="custom-input">
-        </ion-input>
-      </ion-item>
-          <!-- TODO: Alterar a exibição da data -->
-      <ion-item class="custom-item" lines="none">
-        <ion-input  
-          label="Data de Entrega" 
-          labelPlacement="stacked" 
-          type="date"
-          [value]="(form.get('deadlineDate')?.value | date:'yyyy-MM-dd')"
-          (ionChange)="form.patchValue({ deadlineDate: $event.detail.value })"
-          class="custom-input">
-        </ion-input>
-      </ion-item>
-    </div>
-
-    <!-- Seção de itens -->
-    <div class="section-container">
-      <div class="section-header">
-        <h3 class="section-title">
-          Itens
-        </h3>
-         <ion-button class="icon-button" fill="clear">
-            <span (click)="addItem()" class="material-symbols-outlined add-item-btn">add</span>
-        </ion-button>
-        
-      </div>
-      <div class="items-container">
-        <div 
-          *ngFor="let g of itemsFA.controls; let i = index" 
-          class="item-card"
-          [formGroup]="g">
-          
-          <div class="item-header">
-            <span class="item-number">Item {{ i + 1 }}</span>
-            <ion-button 
-              *ngIf="itemsFA.length > 1"
-              fill="clear" 
-              color="danger"
-              size="small"
-              (click)="removeItem(i)"
-              class="icon-button">
-                <span (click)="removeItem(i)" class="material-symbols-outlined remove-btn"> delete </span>
-            </ion-button>
+      <div class="section-container">
+        <div class="section-header">
+          <span class="material-symbols-outlined section-icon">person</span>
+          <h3 class="section-title">Informações do Pedido</h3>
+        </div>
+        <span class="error-message" *ngIf="form.get('customerName')?.invalid && form.get('customerName')?.touched">
+          Nome do cliente é obrigatório
+        </span>
+        <ion-item 
+          class="custom-item" 
+          lines="none"
+          [class.has-error]="form.get('customerName')?.invalid && form.get('customerName')?.touched">
+          <div class="input-with-icon">
+            <span class="material-symbols-outlined input-icon">person</span>
+            <ion-input
+              label="Cliente"
+              labelPlacement="stacked"
+              formControlName="customerName"
+              required
+              placeholder="Nome do cliente">
+            </ion-input>
           </div>
+        </ion-item>
 
-          <ion-item class="custom-item" lines="none">
-            <ion-label position="stacked">Produto</ion-label>
-            <ion-select 
-              interface="action-sheet" 
-              formControlName="productId" 
-              (ionChange)="onProductChange(i)"
-              placeholder="Selecione um produto"
-              class="custom-select">
-              <ion-select-option *ngFor="let p of products()" [value]="p.id">
-                {{ p.name }} ({{ p.quantity }} em estoque)
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+        <span class="error-message" *ngIf="form.get('deadlineDate')?.invalid && form.get('deadlineDate')?.touched">
+          Data de entrega é obrigatória
+        </span>
+        <ion-item 
+          class="custom-item" 
+          lines="none"
+          [class.has-error]="form.get('deadlineDate')?.invalid && form.get('deadlineDate')?.touched">
+          <div class="input-with-icon">
+            <span class="material-symbols-outlined input-icon">calendar_today</span>
+            <ion-input
+              label="Data de Entrega"
+              labelPlacement="stacked"
+              type="date"
+              [value]="(form.get('deadlineDate')?.value | date:'yyyy-MM-dd')"
+              (ionChange)="form.patchValue({ deadlineDate: $event.detail.value })"
+              placeholder="Selecione a data">
+            </ion-input>
+          </div>
+        </ion-item>
+      </div>
 
-          <div class="input-row">
-            <ion-item class="custom-item flex-item" lines="none">
-              <ion-input 
-                type="number" 
-                label="Quantidade" 
-                labelPlacement="stacked" 
-                formControlName="quantity"
-                min="1"
-                class="custom-input">
-              </ion-input>
-            </ion-item>
+      <div class="items-section">
+        <div class="section-header">
+          <span class="material-symbols-outlined section-icon">inventory_2</span>
+          <h3 class="section-title">Itens</h3>
+          <ion-button class="icon-button" fill="clear" (click)="openAddItemModal()">
+            <span class="material-symbols-outlined add-item-btn">add</span>
+          </ion-button>
+        </div>
+        <div class="items-container" *ngIf="itemsFA.length > 0">
+          <div
+            *ngFor="let g of itemsFA.controls; let i = index"
+            class="item-card"
+            [formGroup]="g"
+            [style.--animation-order]="i">
+            
+            <div class="item-content">
+              <div class="item-info">
+                <h3 class="product-name">{{ getProductName(g.get('productId')?.value) }}</h3>
+                <div class="item-details">
+                  <span class="quantity">{{ g.get('quantity')?.value }}x</span>
+                  <span class="unit-price">R$ {{ g.get('unitPrice')?.value | number:'1.2-2' }}</span>
+                </div>
+              </div>
+              
+              <div class="item-total">
+                <span class="total-price">
+                  R$ {{ (g.get('quantity')?.value * g.get('unitPrice')?.value) | number:'1.2-2' }}
+                </span>
+                <ion-button
+                  fill="clear"
+                  color="danger"
+                  size="small"
+                  (click)="removeItem(i)"
+                  class="remove-item-btn">
+                  <span class="material-symbols-outlined">delete</span>
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            <ion-item class="custom-item flex-item" lines="none">
-              <ion-input 
-                type="number" 
-                label="Preço unitário" 
-                labelPlacement="stacked" 
-                formControlName="unitPrice"
-                min="0"
-                step="0.01"
-                class="custom-input">
-              </ion-input>
-            </ion-item>
+        <div class="empty-items" *ngIf="itemsFA.length === 0">
+          <div class="empty-content">
+            <span class="material-symbols-outlined empty-icon">inventory_2</span>
+            <p class="empty-text">Nenhum item adicionado</p>
+            <p class="empty-subtext">Clique no botão + para adicionar itens ao pedido</p>
           </div>
         </div>
       </div>
+    </form>
+  </div>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+    <div class="total-container">
+      <div class="total-label">Total</div>
+      <div class="total-text">R$ {{ total() | number:'1.2-2' }}</div>
     </div>
-  </form>
-    <ion-fab slot="fixed" vertical="bottom" horizontal="start">
-       <div class="total-container">
-        <h2 class="total-text">R$ {{ total() | number:'1.2-2' }}</h2>
-      </div>
-    </ion-fab>
-    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-      <ion-fab-button
-        type="submit" 
-        [disabled]="form.invalid || itemsFA.length === 0"
-        (click)="save()" 
-        class="fab-button"
-        >
-        <span class="material-symbols-outlined">save</span>
-      </ion-fab-button>
-    </ion-fab>
+  </ion-fab>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button
+      type="submit"
+      [disabled]="form.invalid || itemsFA.length === 0"
+      (click)="save()"
+      class="fab-button">
+      <span class="material-symbols-outlined">save</span>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
-
-
