@@ -16,6 +16,7 @@ export class StockDetailPage{
     private router = inject(Router);
     private service = inject(ProductService);
 
+
     product = signal<Product | null>(null);
     id!: string;
 
@@ -25,6 +26,7 @@ export class StockDetailPage{
     }
 
     edit(){
-        this.router.navigate(['tabs/estoque', this.id, 'editar'])
+        this.router.navigate(['estoque', this.id, 'editar'])
     }
+
 }

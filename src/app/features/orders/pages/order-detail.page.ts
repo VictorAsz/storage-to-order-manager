@@ -51,7 +51,7 @@ export class OrdersDetailPage{
     }
 
     goToEdit(){
-        this.router.navigate(['tabs/pedidos/' + this.id + '/editar'])
+        this.router.navigate(['pedidos/' + this.id + '/editar'])
     }
 
     async deleteHandler() {

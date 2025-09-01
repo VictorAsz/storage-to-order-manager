@@ -114,6 +114,15 @@ ion-item.has-error {
   animation: loading 1.5s infinite;
 }
 
+.fab-button {
+  --background: var(--ion-color-primary);
+  --background-hover: var(--ion-button-background-hover);
+  --color: var(--ion-color-primary-contrast);
+  --box-shadow: 0 4px 16px rgba(0, 97, 168, 0.3);
+   margin-right: 10px;
+   margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
 
 @media (max-width: 576px) {
   ion-content {

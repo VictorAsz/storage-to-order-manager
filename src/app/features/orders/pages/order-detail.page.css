@@ -192,7 +192,6 @@ ion-title {
   --background-hover: var(--ion-button-background-hover);
   --color: var(--ion-color-primary-contrast);
   --box-shadow: 0 4px 16px rgba(0, 97, 168, 0.3);
-  
   transition: all 0.3s ease;
 }
 

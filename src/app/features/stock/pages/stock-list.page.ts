@@ -118,7 +118,7 @@ export class StockListPage {
     }
   }
   goNew() {
-    this.router.navigate(['/tabs/estoque/novo']);
+    this.router.navigate(['estoque/novo']);
   }
   open(p: Product) {
     this.router.navigate(['/tabs/estoque', p.id]);

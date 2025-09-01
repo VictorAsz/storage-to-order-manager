@@ -34,7 +34,7 @@ export class OrdersListPage {
   }
 
   goNew() {
-    this.router.navigate(['tabs/pedidos/novo']);
+    this.router.navigate(['pedidos/novo']);
   }
 
   open(o: Order) {
