@@ -181,6 +181,12 @@ ion-title {
   font-weight: 700;
   color: var(--ion-color-primary);
 }
+
+.finish-button{
+  width: 100%;
+  margin-bottom: 6px;
+  --background: var(--ion-color-primary);
+}
 .fab-button {
   --background: var(--ion-color-primary);
   --background-hover: var(--ion-button-background-hover);
@@ -197,6 +203,14 @@ ion-title {
 
 .fab-button:active {
   transform: scale(1.05);
+}
+
+@media (prefers-color-scheme: dark){
+.finish-button{
+  width: 100%;
+  margin-bottom: 6px;
+  --background: var(--ion-color-success);
+}
 }
 
 @media (max-width: 576px) {

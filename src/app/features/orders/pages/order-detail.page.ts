@@ -7,6 +7,7 @@ import { Product } from "src/app/core/models/product.model";
 import { OrderService } from "src/app/core/services/order.service";
 import { ProductService } from "src/app/core/services/product.service";
 import { createOutline } from 'ionicons/icons';
+import { AlertController } from "@ionic/angular";
 @Component({
     standalone: true,
     imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonFab, IonFabButton],
@@ -20,6 +21,7 @@ export class OrdersDetailPage{
     private productService = inject(ProductService);
     private route = inject(ActivatedRoute);
     private router = inject(Router);
+    private alertController = inject(AlertController);
 
     order = signal<Order | null>(null);
     productsMap = new Map<string, Product>();
@@ -38,12 +40,41 @@ export class OrdersDetailPage{
         return this.productsMap.get(id)?.name ?? '(removido)';
     }
 
-    async remove(){
+    async delete(){
         await this.orderService.deleteOrder(this.id);
+        this.router.navigate(['tabs/pedidos'])
+    }
+
+    async finishOrder(){
+        await this.orderService.finishOrder(this.id);
         this.router.navigate(['tabs/pedidos'])
     }
 
     goToEdit(){
         this.router.navigate(['tabs/pedidos/' + this.id + '/editar'])
+    }
+
+    async deleteHandler() {
+        const alert = await this.alertController.create({
+        header: 'Confirmar exclusão',
+        message: 'Você tem certeza que deseja cancelar este pedido?',
+        buttons: [
+        {
+            text: 'Cancelar',
+            role: 'cancel',
+        },
+        {
+            text: 'Cancelar',
+            handler: async () => {
+            if (this.id) {
+                await this.delete();
+                this.router.navigate(['tabs/pedidos']);
+            }
+            }
+        }
+        ]
+    });
+
+    await alert.present();
     }
 }

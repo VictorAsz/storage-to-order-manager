@@ -89,7 +89,7 @@ export class OrderService {
        return orders.filter((o) => o.isConcluded)
     }
 
-async getPendingOrders(): Promise<Order[]>{
+    async getPendingOrders(): Promise<Order[]>{
        const orders = await this.getOrders();
        return orders.filter((o) => !o.isConcluded)
     }

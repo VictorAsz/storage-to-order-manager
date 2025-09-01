@@ -141,17 +141,14 @@ export class OrdersFormPage {
     async confirmDelete() {
         const alert = await this.alertController.create({
         header: 'Confirmar exclusão',
-        message: 'Você tem certeza que deseja deletar este pedido?',
+        message: 'Você tem certeza que deseja cancelar este pedido?',
         buttons: [
         {
             text: 'Cancelar',
             role: 'cancel',
-            handler: () => {
-            console.log('Cancelou a exclusão, ufa~');
-            }
         },
         {
-            text: 'Deletar',
+            text: 'Cancelar',
             handler: async () => {
             if (this.id) {
                 await this.orderService.deleteOrder(this.id);

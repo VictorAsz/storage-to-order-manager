@@ -4,7 +4,13 @@
       <ion-back-button defaultHref="tabs/pedidos"></ion-back-button>
     </ion-buttons>
     <ion-title>Detalhes do Pedido</ion-title>
-  
+      <ion-buttons slot="end">
+        <ion-button color="danger">
+            <span (click)="deleteHandler()" class="material-symbols-outlined remove-btn " style="padding-right: 6px;">
+            delete
+            </span>
+        </ion-button>
+    </ion-buttons>       
   </ion-toolbar>
 </ion-header>
 
@@ -61,6 +67,13 @@
     </div>
   </div>
 
+
+   <ion-fab slot="fixed" vertical="bottom" horizontal="start">
+      <ion-button (click)="finishOrder()" class="ion-button finish-button">
+          <span class="material-symbols-outlined" style="margin-right: 5px;">check</span>
+          Finalizar Pedido
+      </ion-button>
+  </ion-fab>
 
    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button (click)="goToEdit()" class="fab-button">
