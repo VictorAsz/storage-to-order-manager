@@ -51,7 +51,8 @@ export class StockFormPage{
             sku: fv.sku ?? undefined,
             quantity: Number(fv.quantity ?? 0),
             price: (fv.price ?? undefined) as number | undefined,
-            description: fv.description ?? undefined
+            description: fv.description ?? undefined,
+            isActive: true,
         };
          if(this.isEdit()) await this.service.updateProduct(entity);
          else await this.service.addProduct(entity);
