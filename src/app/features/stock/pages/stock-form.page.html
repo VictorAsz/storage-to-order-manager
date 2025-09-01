@@ -1,33 +1,120 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-back-button defaultHref="tabs/estoque"></ion-back-button>
-        </ion-buttons>
-        <ion-title>{{ isEdit() ? "Editar Produto" : "Novo Produto" }}</ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/estoque"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+        <!-- <span class="material-symbols-outlined">
+            {{ isEdit() ? 'edit' : 'add_box' }}
+          </span>
+     -->
+            {{ isEdit() ? 'Editar Produto' : 'Adicionar Novo Produto' }}
+         
+    </ion-title>
+      <ion-buttons *ngIf="isEdit()" slot="end">
+        <ion-button color="danger" >
+            <span (click)="deleteHandler()" class="material-symbols-outlined remove-btn " style="padding-right: 6px;">
+            delete
+            </span>
+        </ion-button>
+    </ion-buttons>     
+  </ion-toolbar>
 </ion-header>
 
-
 <ion-content class="ion-padding">
+  <div class="form-container">
     <form (ngSubmit)="save()" [formGroup]="form">
-        <ion-list lines="full">
-            <ion-item>
-                <ion-input label="Nome" labelPlacement="stacked" formControlName="name" required></ion-input>
+      <div class="form-card">
+        <div class="form-section">
+          <ion-list lines="none">
+            <!-- Nome do Produto -->
+                         <span class="error-message" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+              Nome é obrigatório
+            </span>
+            <ion-item [class.has-error]="form.get('name')?.invalid && form.get('name')?.touched">
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">inventory_2</span>
+                <ion-input 
+                  label="Nome do Produto" 
+                  labelPlacement="stacked" 
+                  formControlName="name" 
+                  required
+                  placeholder="Digite o nome do produto">
+                </ion-input>
+              </div>
             </ion-item>
+
+
+            <!-- SKU -->
             <ion-item>
-                <ion-input label="Código / SKU" labelPlacement="stacked" formControlName="sku"></ion-input>
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">qr_code</span>
+                <ion-input 
+                  label="Código / SKU" 
+                  labelPlacement="stacked" 
+                  formControlName="sku"
+                  placeholder="Ex: PRD001">
+                </ion-input>
+              </div>
             </ion-item>
+
+            <!-- Quantidade -->
             <ion-item>
-                <ion-input type="number" label="Quantidade" labelPlacement="stacked" formControlName="quantity" required></ion-input>
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">warehouse</span>
+                <ion-input 
+                  type="number" 
+                  label="Quantidade em Estoque" 
+                  labelPlacement="stacked" 
+                  formControlName="quantity" 
+                  required
+                  min="0"
+                  placeholder="0">
+                </ion-input>
+              </div>
             </ion-item>
+            <!-- Preço -->
             <ion-item>
-                <ion-input type="number" label="Preço unitário (opcional)" labelPlacement="stacked" formControlName="price"></ion-input>
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">attach_money</span>
+                <ion-input 
+                  type="number" 
+                  label="Preço Unitário (R$)" 
+                  labelPlacement="stacked" 
+                  formControlName="price"
+                  min="0"
+                  step="0.01"
+                  placeholder="0,00 ">
+                </ion-input>
+              </div>
             </ion-item>
+
+            <!-- Descrição -->
             <ion-item>
-                <ion-input label="Descrição" labelPlacement="stacked" formControlName="description"></ion-input>
+              <div class="input-with-icon">
+                <span class="material-symbols-outlined input-icon">description</span>
+                <ion-input 
+                  label="Descrição" 
+                  labelPlacement="stacked" 
+                  formControlName="description"
+                  placeholder="Descrição do produto">
+                </ion-input>
+              </div>
             </ion-item>
-        </ion-list>
-        <ion-button expand="block" type="submit" [disabled]="form.invalid">Salvar</ion-button>
-        <ion-button *ngIf="isEdit()" expand="block" color="danger" (click)="remove()">Excluir</ion-button>
+          </ion-list>
+        </div>
+      </div>
     </form>
+  </div>
+
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button
+        type="submit" 
+        [disabled]="form.invalid"
+        class="fab-button"
+        (click)="save()"
+        >
+        <span class="material-symbols-outlined">save</span>
+      </ion-fab-button>
+    </ion-fab>
 </ion-content>

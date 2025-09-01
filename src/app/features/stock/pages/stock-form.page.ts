@@ -1,7 +1,7 @@
 import { Component, inject, signal } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonTextarea } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonTextarea, IonFab, IonFabButton, AlertController } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { Product } from '../../../core/models/product.model';
@@ -9,16 +9,17 @@ import { Product } from '../../../core/models/product.model';
 @Component({
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonTextarea
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonList, IonButton, IonFab, IonFabButton
     ],
-    templateUrl: './stock-form.page.html'
+    templateUrl: './stock-form.page.html',
+    styleUrl: './stock-form.page.css'
 })
 export class StockFormPage{
     private fb = inject(FormBuilder);
     private route = inject(ActivatedRoute);
     private router = inject(Router);
     private service = inject(ProductService);
-private alertController = inject(AlertController)
+    private alertController = inject(AlertController)
 
     isEdit = signal(false);
     id?: string;
@@ -58,7 +59,7 @@ private alertController = inject(AlertController)
     }
     async deleteProduct(){
         await this.service.deleteProduct(this.id!);
-}
+    }
 
     async deleteHandler() {
         const alert = await this.alertController.create({
@@ -77,7 +78,7 @@ private alertController = inject(AlertController)
             handler: async () => {
             if (this.id) {
                 await this.deleteProduct();
-        this.router.navigate(['tabs/pedidos']);
+                this.router.navigate(['tabs/pedidos']);
             }
             }
         }
