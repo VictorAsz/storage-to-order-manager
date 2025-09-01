@@ -58,6 +58,10 @@ export class OrderService {
         await this.repo.delete(id);
     }
 
+    async deleteWithoutReversal(id: string): Promise<void>{
+        await this.repo.delete(id);
+    }
+
     async updateOrder(order: Order): Promise<void> {
         const stock = await this.productsService.getStock();
         const getProduct = (id: string) => stock.find(p => p.id === id);
