@@ -1,0 +1,59 @@
+
+.custom-menu {
+  --width: 270px;
+  border-radius: 0 20px 20px 0; 
+  overflow: hidden;
+}
+
+.menu-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+
+.list {
+  background: transparent;
+}
+
+/* Itens */
+ion-item {
+  --background: var(--ion-item-background);
+  --color: var(--ion-text-color);
+  border-radius: 12px;
+  margin: 6px 12px;
+  transition: background 0.3s ease;
+}
+
+
+ion-item[color="danger"] {
+  --color: var(--ion-color-danger);
+  font-weight: bold;
+}
+
+ion-icon {
+  font-size: 20px;
+  color: var(--ion-color-primary);
+}
+
+delete-icon{
+    font-size: 20px;
+
+}
+
+ion-item[color="danger"] ion-icon {
+  color: var(--ion-color-danger);
+}
+
+.menu-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  background: var(--ion-background-color);
+}
+.delete-button{
+    border-radius: 12px !important;
+}
+

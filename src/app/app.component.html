@@ -1,3 +1,43 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- menu lateral -->
+  <ion-menu contentId="main-content" side="start" class="custom-menu">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="menu-title">Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+<ion-content>
+  <ion-list lines="none" class="list">
+    <ion-item routerLink="tabs/estoque" detail="false" (click)="closeMenu()">
+      <ion-icon name="cube-outline" slot="start"></ion-icon>
+      <ion-label>Estoque</ion-label>
+    </ion-item>
+
+    <ion-item routerLink="tabs/pedidos" detail="false" (click)="closeMenu()">
+      <ion-icon name="receipt-outline" slot="start"></ion-icon>
+      <ion-label>Pedidos</ion-label>
+    </ion-item>
+  </ion-list>
+
+    <!-- futuramente -->
+      <!-- <ion-item routerLink="tabs/config" detail="false">
+        <ion-icon name="settings-outline" slot="start"></ion-icon>
+        <ion-label>Configurações</ion-label>
+    </ion-item> -->
+
+  <!-- botão grudado no fim -->
+  <div class="menu-footer">
+    <ion-button class="delete-button" color="danger" (click)="clearDataHandler()">
+      <span class="material-symbols-outlined delete-icon">delete_forever</span>
+      Excluir todos os dados
+    </ion-button>
+  </div>
+</ion-content>
+
+
+  </ion-menu>
+
+  <!-- outlet principal -->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>
