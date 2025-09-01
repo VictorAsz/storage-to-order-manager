@@ -12,7 +12,8 @@ addIcons({ addOutline });
 @Component({
   standalone: true,
   imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote],
-  templateUrl: './orders-list.page.html'
+  templateUrl: './orders-list.page.html',
+  styleUrl: './orders-list.page.css'
 })
 export class OrdersListPage {
   private router = inject(Router);

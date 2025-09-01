@@ -1,27 +1,40 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>
-            Pedidos
-        </ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-title>
+      Pedidos
+    </ion-title>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-list>
-        <ion-item *ngFor="let o of orders()" (click)="open(o)" detail="true">
-            <ion-label>
-                <h2>{{ o.customerName }}</h2>
-                <p>{{ o.deadlineDate | date:'short' }}</p>
-            </ion-label>
-                <ion-note slot="end">R$ {{ o.total | number:'1.2-2' }}</ion-note>
-            </ion-item>
-            <ion-item *ngIf="orders().length === 0">
-                <ion-label>Nenhum pedido cadastrado.</ion-label>           
-        </ion-item>
-    </ion-list>
-     <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-        <ion-fab-button (click)="goNew()">
-            <ion-icon name="add-outline"></ion-icon>
-        </ion-fab-button>
-    </ion-fab>
+<ion-content class="ion-padding">
+  <ion-list class="orders-list">
+    <ion-item 
+      *ngFor="let o of orders()" 
+      (click)="open(o)"
+      lines="none" 
+      detail="true"
+      class="order-item">
+      <ion-label>
+        <h2 class="customer-name">{{ o.customerName }}</h2>
+        <p class="deadline-date">{{ o.deadlineDate | date:'short' }}</p>
+      </ion-label>
+      <ion-note slot="end" class="order-total">R$ {{ o.total | number:'1.2-2' }}</ion-note>
+    </ion-item>
+    
+    <ion-item *ngIf="orders().length === 0" lines="none" class="empty-state">
+      <ion-label>
+        <div class="empty-content">
+          <ion-icon name="receipt-outline" class="empty-icon"></ion-icon>
+          <h3>Nenhum pedido cadastrado</h3>
+          <p>Toque no botão + para criar seu primeiro pedido</p>
+        </div>
+      </ion-label>
+    </ion-item  >
+  </ion-list>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="goNew()" class="fab-button">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
