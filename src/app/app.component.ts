@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { IonApp, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuButton, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar, MenuController } from '@ionic/angular/standalone';
+import { Router, RouterLink} from '@angular/router';
+import { IonApp, IonButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonRouterOutlet, IonTitle, IonToolbar, MenuController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { cubeOutline, receiptOutline } from 'ionicons/icons';
 import { App as CapacitorApp } from '@capacitor/app';
@@ -12,7 +12,7 @@ addIcons({ cubeOutline, receiptOutline });
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, RouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, RouterLinkActive, RouterLink, IonMenu, IonHeader, IonToolbar, IonContent, IonList, IonItem, IonTitle, IonButtons, IonMenuButton, IonButton, IonFooter],
+  imports: [IonApp, IonRouterOutlet, IonIcon, IonLabel, RouterLink, IonMenu, IonHeader, IonToolbar, IonContent, IonList, IonItem, IonTitle, IonButton],
   styleUrl: './app.component.scss'
 })
 export class AppComponent {

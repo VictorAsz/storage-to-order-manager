@@ -1,13 +1,13 @@
-import { CommonModule, NgIf } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { Component, computed, inject, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonButtons, IonMenuButton, IonSearchbar, IonButton } from "@ionic/angular/standalone";
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonIcon, IonNote, IonButtons, IonMenuButton, IonSearchbar, IonButton } from "@ionic/angular/standalone";
 import { Order } from "src/app/core/models/order.model";
 import { OrderService } from "src/app/core/services/order.service";
 
 @Component({
     standalone: true,
-    imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonButtons, IonMenuButton, IonSearchbar, IonButton],
+    imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonIcon, IonNote, IonButtons, IonMenuButton, IonSearchbar, IonButton],
     templateUrl: './finished-orders-list.page.html',
     styleUrl: './finished-orders-list.page.css'
 })

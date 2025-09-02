@@ -7,7 +7,6 @@ import { ProductService } from '../../../core/services/product.service';
 import { OrderService } from '../../../core/services/order.service';
 import { Product } from '../../../core/models/product.model';
 import { Order, OrderItem } from '../../../core/models/order.model';
-import { IonIcon } from '@ionic/angular/standalone';
 import { AlertController } from '@ionic/angular';
 import { OrderItemFormModal } from './order-item-form.modal';
 
@@ -16,7 +15,7 @@ import { OrderItemFormModal } from './order-item-form.modal';
 @Component({
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule,
-        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonButton, IonSelect, IonSelectOption, IonLabel, IonFab, IonFabButton, OrderItemFormModal
+        IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonItem, IonInput, IonButton, IonFab, IonFabButton
     ],
     templateUrl: './order-form.page.html',
     styleUrl: './order-form.page.css'

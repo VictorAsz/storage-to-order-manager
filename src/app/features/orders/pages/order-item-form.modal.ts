@@ -4,17 +4,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AlertController, ModalController } from '@ionic/angular';
 import { 
   IonButton, 
-  IonButtons, 
   IonContent, 
   IonHeader, 
   IonInput, 
   IonItem, 
-  IonLabel, 
   IonList, 
   IonSelect, 
   IonSelectOption, 
-  IonTitle, 
-  IonToolbar 
 } from '@ionic/angular/standalone';
 import { Product } from 'src/app/core/models/product.model';
 import { ProductService } from 'src/app/core/services/product.service';
@@ -28,13 +24,9 @@ import { ProductService } from 'src/app/core/services/product.service';
     CommonModule, 
     ReactiveFormsModule, 
     IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonButtons, 
     IonButton, 
     IonContent, 
     IonItem, 
-    IonLabel, 
     IonSelect, 
     IonSelectOption, 
     IonInput,

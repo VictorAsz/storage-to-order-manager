@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonFab, IonFabButton, AlertController } from "@ionic/angular/standalone";
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonFab, AlertController } from "@ionic/angular/standalone";
 import { Order } from "src/app/core/models/order.model";
 import { Product } from "src/app/core/models/product.model";
 import { OrderService } from "src/app/core/services/order.service";
@@ -9,7 +9,7 @@ import { ProductService } from "src/app/core/services/product.service";
 
 @Component({
     standalone: true,
-    imports: [CommonModule,  IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonFab, IonFabButton],
+    imports: [CommonModule,  IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton, IonFab],
     templateUrl: './finished-orders-detail.page.html',
     styleUrl: './finished-orders-detail.page.css'
 })
