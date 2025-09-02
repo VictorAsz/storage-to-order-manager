@@ -10,9 +10,13 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-searchbar
+    placeholder="Buscar pedido..."
+    (ionInput)="filter($event)">
+  </ion-searchbar>
   <ion-list class="orders-list">
     <ion-item 
-      *ngFor="let o of orders()" 
+      *ngFor="let o of paginatedList()" 
       (click)="open(o)"
       lines="none" 
       detail="true"
@@ -34,4 +38,15 @@
       </ion-label>
     </ion-item  >
   </ion-list>
+    @if (orders().length > pageSize) {
+    <div class="pagination">
+      <ion-button (click)="prevPage()" [disabled]="currentPage() === 1">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage() }} de {{ totalPages() }}</span>
+      <ion-button (click)="nextPage()" [disabled]="currentPage() === totalPages()">
+        Próxima
+      </ion-button>
+    </div>
+  }
 </ion-content>

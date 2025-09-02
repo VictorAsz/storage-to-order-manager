@@ -66,7 +66,7 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  @if (paginatedProducts().length > pageSize) {
+  @if (products().length > pageSize) {
     <div class="pagination">
       <ion-button (click)="prevPage()" [disabled]="currentPage() === 1">
         Anterior

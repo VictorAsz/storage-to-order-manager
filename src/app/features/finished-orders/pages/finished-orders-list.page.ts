@@ -1,13 +1,13 @@
 import { CommonModule, NgIf } from "@angular/common";
-import { Component, inject, signal } from "@angular/core";
+import { Component, computed, inject, signal } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonButtons, IonMenuButton } from "@ionic/angular/standalone";
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonButtons, IonMenuButton, IonSearchbar, IonButton } from "@ionic/angular/standalone";
 import { Order } from "src/app/core/models/order.model";
 import { OrderService } from "src/app/core/services/order.service";
 
 @Component({
     standalone: true,
-    imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonButtons, IonMenuButton],
+    imports: [CommonModule, IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonFab, IonFabButton, IonIcon, IonNote, IonButtons, IonMenuButton, IonSearchbar, IonButton],
     templateUrl: './finished-orders-list.page.html',
     styleUrl: './finished-orders-list.page.css'
 })
@@ -16,16 +16,46 @@ export class FinishedOrdersPage{
     private route = inject(ActivatedRoute)
     private router = inject(Router)
 
+    public readonly orders = this.orderService.orders$;
 
-    orders = signal<Order[]>([])
+    searchQuery = signal('');
+    currentPage = signal(1);
+    pageSize = 10;
 
-    ionViewWillEnter(){
-        this.load();
+    filter(event: any){
+        this.searchQuery.set(event.target.value.toLowerCase());
+        this.currentPage.set(1);
+    } 
+   
+    filteredList = computed(() => {
+        let list = this.orders();
+
+        const query = this.searchQuery();
+        if (query) {
+        list = list.filter(p => p.customerName.toLowerCase().includes(query));
+        }
+
+        return list;
+    });
+
+    totalPages = computed(() =>
+        Math.ceil(this.filteredList().length / this.pageSize) || 1
+    );
+
+    paginatedList = computed(() => {
+        const start = (this.currentPage() - 1) * this.pageSize;
+        return this.filteredList().slice(start, start + this.pageSize);
+    });
+
+    nextPage() {
+        if (this.currentPage() < this.totalPages()) {
+        this.currentPage.update(p => p + 1);
+        }
     }
-
-    async load(){
-        const all = await this.orderService.getFinishedOrders();
-        this.orders.set(all.sort((a,b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? '')));
+    prevPage() {
+        if (this.currentPage() > 1) {
+        this.currentPage.update(p => p - 1);
+        }
     }
 
     open(o: Order) {

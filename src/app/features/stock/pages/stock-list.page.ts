@@ -35,26 +35,16 @@ addIcons({ addOutline });
   styleUrl: './stock-list.page.css'
 })
 export class StockListPage {
+  private service = inject(ProductService);
+  private router = inject(Router);
 
-  products = signal<Product[]>([]);
+  public readonly products = this.service.products$;
   searchQuery = signal('');
   stockFilter = signal<'all' | 'in-stock' | 'low-stock' | 'out-of-stock'>('all');
   // showActiveOnly = signal(false);
 
   currentPage = signal(1);
   pageSize = 10;
-
-  private service = inject(ProductService);
-  private router = inject(Router);
-
-  ionViewWillEnter() {
-    this.load();
-  }
-
-  async load() {
-    const list = await this.service.getStock();
-    this.products.set(list);
-  }
 
   filterProducts(event: any) {
     this.searchQuery.set(event.target.value.toLowerCase());

@@ -79,7 +79,7 @@ export class StockFormPage{
             handler: async () => {
             if (this.id) {
                 await this.deleteProduct();
-                this.router.navigate(['tabs/pedidos']);
+                this.router.navigate(['tabs/estoque']);
             }
             }
         }
