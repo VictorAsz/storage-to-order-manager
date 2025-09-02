@@ -104,15 +104,6 @@ export class OrderService {
                 return currentOrders;
             });
     }
-
-    async getFinishedOrders(): Promise<Order[]>{
-     return this.orders().filter((o) => o.isConcluded);
-    }
-
-    async getPendingOrders(): Promise<Order[]>{
-      return this.orders().filter((o) => !o.isConcluded);
-    }
-
     async finishOrder(id: string): Promise<void>{
         const orders = await this.getOrders();
         let order = orders.find((o) => o.id === id )!

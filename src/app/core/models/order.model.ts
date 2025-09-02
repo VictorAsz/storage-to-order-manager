@@ -10,7 +10,7 @@ export interface Order {
   customerName: string;
   createdAt: string;  
   total: number;
-  isConcluded?: boolean;
+  isConcluded: boolean;
   deadlineDate?: string;
   finishedDate?: string; 
   items: OrderItem[];

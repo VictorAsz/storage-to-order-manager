@@ -75,19 +75,7 @@ export class OrdersFormPage {
                 this.updateTotal();
             }
         } 
-        // else {
-        //     this.addItem(); // novo pedido começa com um item
-        // }
     }
-
-    // addItem() {
-    //     const g = this.fb.group({
-    //         productId: ['', Validators.required],
-    //         quantity: [1, [Validators.required, Validators.min(1)]],
-    //         unitPrice: [0, [Validators.required, Validators.min(0)]],
-    //     });
-    //     this.itemsFA.push(g);
-    // }
 
     removeItem(i: number) {
         this.itemsFA.removeAt(i);
@@ -160,6 +148,7 @@ export class OrdersFormPage {
             productId: g.get('productId')!.value,
             quantity: Number(g.get('quantity')!.value),
             unitPrice: Number(g.get('unitPrice')!.value),
+            isConcluded: false
         }));
 
         const order: Order = {

@@ -16,7 +16,9 @@ export class FinishedOrdersPage{
     private route = inject(ActivatedRoute)
     private router = inject(Router)
 
-    public readonly orders = this.orderService.orders$;
+    public readonly orders = computed(() => {
+        return this.orderService.orders$().filter((o) => o.isConcluded);
+    });
 
     searchQuery = signal('');
     currentPage = signal(1);

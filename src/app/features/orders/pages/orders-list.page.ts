@@ -22,8 +22,10 @@ export class OrdersListPage {
   private toastCtrl = inject(ToastController)
   private alertCtrl = inject(AlertController)
 
-  public readonly orders = this.service.orders$;
 
+  public readonly orders = computed(() => {
+      return this.orderService.orders$().filter((o) => !o.isConcluded);
+  });
   searchQuery = signal('');
   currentPage = signal(1);
   pageSize = 10;
