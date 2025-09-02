@@ -25,9 +25,13 @@
                   label="Produto"
                   labelPlacement="stacked"
                   placeholder="Selecione um produto">
-                  <ion-select-option *ngFor="let p of products" [value]="p.id">
+                  <ion-select-option 
+                    *ngFor="let p of products" 
+                    [value]="p.id"
+                    [disabled]="p.quantity <= 0">
                     {{ p.name }} ({{ p.quantity }} em estoque)
                   </ion-select-option>
+
                 </ion-select>
               </div>
             </ion-item>

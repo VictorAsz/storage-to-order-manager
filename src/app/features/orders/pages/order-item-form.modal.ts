@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { 
   IonButton, 
   IonButtons, 
@@ -48,7 +48,8 @@ export class OrderItemFormModal {
   constructor(
     private fb: FormBuilder,
     private modalCtrl: ModalController,
-    private productService: ProductService
+    private productService: ProductService,
+    private alertCtrl: AlertController
   ) {
     this.itemForm = this.fb.group({
       productId: ['', Validators.required],
@@ -68,11 +69,9 @@ export class OrderItemFormModal {
   onProductChange() {
     const productId = this.itemForm.get('productId')?.value;
     const product = this.products.find(p => p.id === productId);
-    
+
     if (product && product.price) {
-      this.itemForm.patchValue({ 
-        unitPrice: product.price 
-      });
+      this.itemForm.patchValue({ unitPrice: product.price });
     }
   }
 
@@ -80,7 +79,32 @@ export class OrderItemFormModal {
     this.modalCtrl.dismiss();
   }
 
-  addItem() {
+  async addItem() {
+    const productId = this.itemForm.get('productId')?.value;
+    const quantity = this.itemForm.get('quantity')?.value;
+    const product = this.products.find(p => p.id === productId);
+
+    if (!product) return;
+
+    if (product.quantity <= 0) {
+      const alert = await this.alertCtrl.create({
+        header: 'Estoque insuficiente',
+        message: `O produto ${product.name} não possui estoque disponível.`,
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+    if (quantity > product.quantity) {
+      const alert = await this.alertCtrl.create({
+        header: 'Quantidade inválida',
+        message: `Você pediu ${quantity}, mas só há ${product.quantity} em estoque.`,
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+
     if (this.itemForm.valid) {
       const itemData = this.itemForm.getRawValue();
       this.modalCtrl.dismiss(itemData, 'confirm');
