@@ -6,13 +6,15 @@
     <ion-title>
             {{ isEdit() ? 'Editar Produto' : 'Adicionar Novo Produto' }}     
     </ion-title>
-      <ion-buttons *ngIf="isEdit()" slot="end">
+    @if (isEdit()) {
+      <ion-buttons slot="end">
         <ion-button color="danger" >
             <span (click)="deleteHandler()" class="material-symbols-outlined remove-btn " style="padding-right: 6px;">
             delete
             </span>
         </ion-button>
     </ion-buttons>     
+    }
   </ion-toolbar>
 </ion-header>
 
@@ -23,9 +25,11 @@
         <div class="form-section">
           <ion-list lines="none">
             <!-- Nome do Produto -->
-            <span class="error-message" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+             @if (form.get('name')?.invalid && form.get('name')?.touched) {
+            <span class="error-message">
               Nome é obrigatório
             </span>
+            }
             <ion-item [class.has-error]="form.get('name')?.invalid && form.get('name')?.touched">
               <div class="input-with-icon">
                 <span class="material-symbols-outlined input-icon">inventory_2</span>

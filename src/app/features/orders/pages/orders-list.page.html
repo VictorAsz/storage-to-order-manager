@@ -28,8 +28,8 @@
       </ion-label>
       <ion-note slot="end" class="order-total">R$ {{ o.total | number:'1.2-2' }}</ion-note>
     </ion-item>
-    
-    <ion-item *ngIf="paginatedList().length === 0" lines="none" class="empty-state">
+    @if (paginatedList().length === 0) {
+    <ion-item lines="none" class="empty-state">
       <ion-label>
         <div class="empty-content">
           <ion-icon name="receipt-outline" class="empty-icon"></ion-icon>
@@ -38,6 +38,7 @@
         </div>
       </ion-label>
     </ion-item  >
+    }
   </ion-list>
   @if (orders().length > pageSize) {
     <div class="pagination">

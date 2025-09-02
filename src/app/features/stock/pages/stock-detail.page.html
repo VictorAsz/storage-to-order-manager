@@ -7,63 +7,71 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="product() as p">
-  <div class="product-details-card">
-    <div class="product-info-grid">
-      <!-- Nome do Produto -->
-      <div class="info-item">
-        <span class="material-symbols-outlined info-icon">inventory_2</span>
-        <div class="info-content">
-          <span class="info-label">Nome do Produto</span>
-          <h3 class="info-value">{{ p.name }}</h3>
+<ion-content class="ion-padding">
+  @if (product()) {
+    <div class="product-details-card">
+      <div class="product-info-grid">
+        <!-- Nome do Produto -->
+        <div class="info-item">
+          <span class="material-symbols-outlined info-icon">inventory_2</span>
+          <div class="info-content">
+            <span class="info-label">Nome do Produto</span>
+            <h3 class="info-value">{{ product()!.name }}</h3>
+          </div>
         </div>
-      </div>
 
-      <!-- SKU -->
-      <div class="info-item" *ngIf="p.sku">
-        <span class="material-symbols-outlined info-icon">qr_code</span>
-        <div class="info-content">
-          <span class="info-label">Código SKU</span>
-          <h3 class="info-value">{{ p.sku }}</h3>
-        </div>
-      </div>
+        <!-- SKU -->
+        @if (product()?.sku) {
+          <div class="info-item">
+            <span class="material-symbols-outlined info-icon">qr_code</span>
+            <div class="info-content">
+              <span class="info-label">Código SKU</span>
+              <h3 class="info-value">{{ product()?.sku }}</h3>
+            </div>
+          </div>
+        }
 
-      <!-- Quantidade -->
-      <div class="info-item">
-        <span class="material-symbols-outlined info-icon quantity-icon">warehouse</span>
-        <div class="info-content">
-          <span class="info-label">Quantidade em Estoque</span>
-          <h3 class="quantity-value">
-            {{ p.quantity }}
-          </h3>
+        <!-- Quantidade -->
+        <div class="info-item">
+          <span class="material-symbols-outlined info-icon quantity-icon">warehouse</span>
+          <div class="info-content">
+            <span class="info-label">Quantidade em Estoque</span>
+            <h3 class="quantity-value">
+              {{ product()?.quantity }}
+            </h3>
+          </div>
         </div>
-      </div>
 
-      <!-- Preço -->
-      <div class="info-item" *ngIf="p.price !== undefined">
-        <span class="material-symbols-outlined info-icon price-icon">attach_money</span>
-        <div class="info-content">
-          <span class="info-label">Preço Unitário</span>
-          <h2 class="price-value">R$ {{ p.price | number:'1.2-2' }}</h2>
-        </div>
+        <!-- Preço -->
+        @if (product()?.price !== undefined) {
+          <div class="info-item">
+            <span class="material-symbols-outlined info-icon price-icon">attach_money</span>
+            <div class="info-content">
+              <span class="info-label">Preço Unitário</span>
+              <h2 class="price-value">R$ {{ product()!.price | number:'1.2-2' }}</h2>
+            </div>
+          </div>
+        }
       </div>
     </div>
-  </div>
 
-  <!-- Seção de Descrição  -->
-  <div class="description-section" *ngIf="p.description">
-    <div class="description-card">
-      <div class="section-header">
-        <span class="material-symbols-outlined section-icon">description</span>
-        <h2 class="section-title">Descrição</h2>
+    <!-- Seção de Descrição -->
+    @if (product()?.description) {
+      <div class="description-section">
+        <div class="description-card">
+          <div class="section-header">
+            <span class="material-symbols-outlined section-icon">description</span>
+            <h2 class="section-title">Descrição</h2>
+          </div>
+          <p class="description-text">{{ product()!.description }}</p>
+        </div>
       </div>
-      <p class="description-text">{{ p.description }}</p>
-    </div>
-  </div>
+    }
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="edit()" class="fab-button">
-      <span class="material-symbols-outlined">edit</span>
-    </ion-fab-button>
-  </ion-fab>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+      <ion-fab-button (click)="edit()" class="fab-button">
+        <span class="material-symbols-outlined">edit</span>
+      </ion-fab-button>
+    </ion-fab>
+  }
 </ion-content>

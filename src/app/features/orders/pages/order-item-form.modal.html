@@ -11,9 +11,11 @@
         <div class="form-section">
           <ion-list lines="none">
             <!-- Produto -->
-            <span class="error-message" *ngIf="itemForm.get('productId')?.invalid && itemForm.get('productId')?.touched">
+             @if(itemForm.get('productId')?.invalid && itemForm.get('productId')?.touched){
+            <span class="error-message">
               Produto é obrigatório
             </span>
+            }
             <ion-item [class.has-error]="itemForm.get('productId')?.invalid && itemForm.get('productId')?.touched">
               <div class="input-with-icon">
                 <span class="material-symbols-outlined input-icon">inventory_2</span>
@@ -36,9 +38,11 @@
             </ion-item>
 
             <!-- Quantidade -->
-            <span class="error-message" *ngIf="itemForm.get('quantity')?.invalid && itemForm.get('quantity')?.touched">
-              Quantidade deve ser maior que 0
-            </span>
+             @if (itemForm.get('quantity')?.invalid && itemForm.get('quantity')?.touched) {
+              <span class="error-message">
+                Quantidade deve ser maior que 0
+              </span>
+              }
             <ion-item [class.has-error]="itemForm.get('quantity')?.invalid && itemForm.get('quantity')?.touched">
               <div class="input-with-icon">
                 <span class="material-symbols-outlined input-icon">warehouse</span>
@@ -55,9 +59,11 @@
             </ion-item>
 
             <!-- Preço Unitário -->
-            <span class="error-message" *ngIf="itemForm.get('unitPrice')?.invalid && itemForm.get('unitPrice')?.touched">
-              Preço deve ser maior que 0
-            </span>
+             @if (itemForm.get('unitPrice')?.invalid && itemForm.get('unitPrice')?.touched) {
+              <span class="error-message">
+                Preço deve ser maior que 0
+              </span>
+            }
             <ion-item [class.has-error]="itemForm.get('unitPrice')?.invalid && itemForm.get('unitPrice')?.touched">
               <div class="input-with-icon">
                 <span class="material-symbols-outlined input-icon">attach_money</span>

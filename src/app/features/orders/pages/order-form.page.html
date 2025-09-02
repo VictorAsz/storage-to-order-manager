@@ -5,13 +5,15 @@
       <ion-back-button defaultHref="tabs/pedidos"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ isEdit() ? 'Editar Pedido' : 'Novo Pedido' }}</ion-title>
-    <ion-buttons *ngIf="isEdit()" slot="end">
+   @if (isEdit()) {
+    <ion-buttons slot="end">
       <ion-button color="danger">
         <span (click)="confirmDelete()" class="material-symbols-outlined remove-btn">
           delete
         </span>
       </ion-button>
     </ion-buttons>
+    }
   </ion-toolbar>
 </ion-header>
 
@@ -24,9 +26,11 @@
           <span class="material-symbols-outlined section-icon">person</span>
           <h3 class="section-title">Informações do Pedido</h3>
         </div>
-        <span class="error-message" *ngIf="form.get('customerName')?.invalid && form.get('customerName')?.touched">
+        @if(form.get('customerName')?.invalid && form.get('customerName')?.touched){
+        <span class="error-message">
           Nome do cliente é obrigatório
         </span>
+        }
         <ion-item 
           class="custom-item" 
           lines="none"
@@ -43,9 +47,11 @@
           </div>
         </ion-item>
 
-        <span class="error-message" *ngIf="form.get('deadlineDate')?.invalid && form.get('deadlineDate')?.touched">
+       @if (form.get('deadlineDate')?.invalid && form.get('deadlineDate')?.touched) {
+        <span class="error-message">
           Data de entrega é obrigatória
         </span>
+        }
         <ion-item 
           class="custom-item" 
           lines="none"
@@ -72,7 +78,10 @@
             <span class="material-symbols-outlined add-item-btn">add</span>
           </ion-button>
         </div>
-        <div class="items-container" *ngIf="itemsFA.length > 0">
+
+        @if (itemsFA.length > 0) 
+        {
+        <div class="items-container">
           <div
             *ngFor="let g of itemsFA.controls; let i = index"
             class="item-card"
@@ -104,14 +113,17 @@
             </div>
           </div>
         </div>
-
-        <div class="empty-items" *ngIf="itemsFA.length === 0">
+        }
+        @if (itemsFA.length === 0) 
+        {
+        <div class="empty-items">
           <div class="empty-content">
             <span class="material-symbols-outlined empty-icon">inventory_2</span>
             <p class="empty-text">Nenhum item adicionado</p>
             <p class="empty-subtext">Clique no botão + para adicionar itens ao pedido</p>
           </div>
         </div>
+        }
       </div>
     </form>
   </div>
