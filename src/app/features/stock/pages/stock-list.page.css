@@ -164,7 +164,7 @@ ion-item {
 }
 
 ion-searchbar{
-  --border-radius: 12px;
+  --border-radius: 100px;
 }
 
 .pagination {

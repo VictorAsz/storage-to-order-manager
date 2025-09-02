@@ -9,6 +9,10 @@ ion-toolbar {
   --border-width: 0;
 }
 
+ion-searchbar{
+  --border-radius: 100px;
+}
+
 ion-title {
   font-weight: 600;
   font-size: 1.3rem;
