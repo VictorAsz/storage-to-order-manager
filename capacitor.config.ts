@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.inventorymanager.ionic',
-  appName: 'Gerenciador de Inventário',
+  appId: 'com.vendafacil.ionic',
+  appName: 'Venda Fácil',
   webDir: 'www'
 };
 
